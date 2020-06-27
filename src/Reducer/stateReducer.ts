@@ -21,10 +21,10 @@ import {
     number_of_video: 0,
   };
   
-  export const stateReducer: Reducer<IMainState, MainActions> = (
+  export const stateReducer: Reducer<IMainState , MainActions> = (
     state = initialState,
     action
-  ): IMainState => {
+  ) => {
     switch (action.type) {
       case GetDataResultsTypes.GETDATARESULTS: {
   
@@ -94,7 +94,7 @@ import {
         };
       }
         
-  
+        
       default:
         return state;
     }

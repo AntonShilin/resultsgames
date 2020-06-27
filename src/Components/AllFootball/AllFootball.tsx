@@ -7,6 +7,7 @@ import {
   toggleResultPanel,
   viewMoreMatchInfo,
   getMatchID,
+  sortingAllMatchesByDate,
 } from "../../Actions/Actions";
 import "./AllFootball.scss";
 import { MdKeyboardArrowUp } from "react-icons/md";
@@ -27,7 +28,7 @@ export interface IAllFootballProps {
 export interface State {}
 
 class AllFootball extends React.Component<IAllFootballProps, State> {
-  private arrMatchResult: IData[];
+  private arrMatchResult: HTMLDivElement[];
   constructor(props: IAllFootballProps) {
     super(props);
     this.arrMatchResult = [];
@@ -37,26 +38,27 @@ class AllFootball extends React.Component<IAllFootballProps, State> {
     if (this.props.allfootball === null) {
       this.props.getData("https://www.scorebat.com/video-api/v1/");
     }
+
   }
 
-  public setRef = (node: any) => {
+  public setRef = (node: HTMLDivElement) => {
     this.arrMatchResult.push(node);
   };
 
   public render() {
-      const {similar_years,allfootball} = this.props
+    const { similar_years, allfootball } = this.props;
 
-    const sortingMatchesByDate: MatchesByDate[]  = [];
+    const sortingMatchesByDate: MatchesByDate[] = [];
 
-      similar_years.map((year: string, i: number) => {
-        sortingMatchesByDate!.push([year]);
+    similar_years.map((year: string, i: number) => {
+      sortingMatchesByDate!.push([year]);
 
-        allfootball!.map((match: IData, k: number) =>
-          match.date.match(year) !== null
-            ? sortingMatchesByDate![i].push(match)
-            : null
-        );
-      });
+      allfootball!.map((match: IData, k: number) =>
+        match.date.match(year) !== null
+          ? sortingMatchesByDate![i].push(match)
+          : null
+      );
+    });
 
     return (
       <React.Fragment>
@@ -146,7 +148,6 @@ const mapStateToProps = (state: any) => {
     allfootball: state.allResults.data,
     isLoading: state.allResults.isLoading,
     similar_years: state.allResults.similar_years,
-    sortByDate: state.allResults.sortByDate,
   };
 };
 

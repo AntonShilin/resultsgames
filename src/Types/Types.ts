@@ -39,7 +39,6 @@ export enum GetDataResultsTypes {
   
   /* interfaces */
   
-  
   export interface IGetMatchIdAction {
     type: GetMatchIdTypes.GETMATCHID
     id:number
@@ -85,7 +84,7 @@ export enum GetDataResultsTypes {
     type: toggleRezultPanelTypes.RESULTPANEL;
   }
   
-  export type MainActions =
+export type MainActions =
     | IGetDataResultsAction
     | IResultPanelAction
     | IToggleFooterAction
@@ -127,9 +126,9 @@ export enum GetDataResultsTypes {
   
   export interface IMainState {
      data: IData[] | null;
-    readonly similar_years: string[];
-    readonly isLoading: boolean;
-    readonly matchID: number | null;
+     similar_years: string[];
+     isLoading: boolean;
+     matchID: number | null;
     number_of_video: number | 0;
   }
   
