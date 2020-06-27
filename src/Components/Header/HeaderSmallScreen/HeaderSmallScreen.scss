@@ -1,0 +1,67 @@
+.main_menu_small_screen {
+    min-height: 3rem;
+    background-color: #ffffff;
+    a {
+      text-decoration: none !important;
+      p {
+        font-size: 1.4375rem;
+        color: #000000;
+        text-transform: capitalize;
+      }
+    }
+    div > button.small_screen_arrow {
+      background-color: transparent;
+      outline: transparent;
+      border: 0;
+      font-size: 2rem;
+      transition: transform 0.3s;
+      transform: rotate(0deg);
+    }
+  }
+  
+  .arrow_up {
+    transition: transform 0.3s;
+    transform: rotate(180deg) !important;
+  }
+  
+  figure {
+    img {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+  
+  div.row.list_small_screen_menu {
+    display: none;
+    height: 0rem;
+    background-color: rgb(243, 243, 246);
+    div {
+      border-bottom: 0.5px solid rgb(231, 232, 234);
+      height: 3rem;
+      &:hover {
+        cursor: pointer;
+        background-color: rgb(16, 52, 100);
+        a {
+          color: #ffffff !important;
+        }
+      }
+      a {
+        color: #333333;
+        text-decoration: none;
+        p {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+  
+  div.show_menu {
+    top: 3.1rem;
+    right: 0.99rem;
+    position: absolute;
+    display: block !important;
+    height: auto !important;
+    width: 80%;
+    z-index: 10;
+  }
+  

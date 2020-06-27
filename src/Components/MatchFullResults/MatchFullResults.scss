@@ -1,0 +1,181 @@
+div.page {
+    min-height: 90vh !important;
+    div {
+      div {
+        div {
+          span.prev_page {
+            cursor: pointer;
+            svg {
+              &:hover {
+                color: #103464 !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  div.desk_result {
+    min-height: 15rem !important;
+    background-image: url("https://supersport.azureedge.net/web-assets/football/match-background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-origin: border-box;
+    div.row:nth-of-type(1) {
+      div {
+        p {
+          font-size: 1.31255rem;
+          font-weight: 300;
+          letter-spacing: 1.2px;
+          color: #fff;
+          text-transform: uppercase;
+        }
+      }
+    }
+    div.row:nth-of-type(2) {
+      min-height: 11rem;
+      div:nth-of-type(1) {
+        p {
+          font-size: 1.125rem;
+          font-weight: 400;
+          color: #fff;
+        }
+      }
+      div:nth-of-type(2) {
+        p {
+          font-size: 2rem;
+          font-weight: 400;
+          color: #fff;
+          letter-spacing: 0.2rem;
+        }
+      }
+      div:nth-of-type(3) {
+        p {
+          font-size: 1.125rem;
+          font-weight: 400;
+          color: #fff;
+        }
+      }
+      div:nth-of-type(4) {
+        p:nth-of-type(1) {
+          font-size: 1.25rem;
+          color: #fff;
+          font-weight: 300;
+        }
+        p:nth-of-type(2) {
+          font-size: 1.0625rem;
+          font-weight: 300;
+          color: #fff;
+        }
+      }
+    }
+  }
+  
+  div.match-events {
+    background-color: #fff;
+    height: 100%;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    overflow: hidden;
+    p:nth-of-type(1) {
+      font-size: 1.125rem;
+      color: #272626;
+      font-weight: 700;
+    }
+    p:not(:first-child) {
+      display: flex;
+      span.player-name {
+        background: #e7e8ea;
+        font-size: 0.875rem;
+        color: #636b6f;
+        align-self: center;
+        padding: 0.3rem 0.5rem 0.3rem 0.5rem;
+        min-width: 100%;
+      }
+      span.minutes-events {
+        display: block;
+        font-size: 0.875;
+        padding: 7px 0;
+        text-align: center;
+        background: #4d4f55;
+        color: #fff;
+        border-radius: 50%;
+        min-width: 2.375rem;
+        min-height: 2.375rem;
+      }
+    }
+  }
+  
+  @media screen and (max-width: 767px) {
+    div.match-events {
+      p:not(:first-child) {
+        padding-left: 25%;
+      }
+    }
+  }
+  
+  div.video_bg {
+    position: relative;
+    p {
+      padding: 0.5rem 0 0.5rem 0;
+      font-size: 1.125rem;
+      color: #272626;
+      font-weight: 700;
+    }
+    .video_clips {
+      .video {
+        margin: 0 auto;
+      }
+      .thumbnail_videos {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        padding: 0.3rem;
+        .thumbnail_videos_items {
+          height: auto;
+          width: 4rem;
+          margin: 0rem 0.3rem 0rem 0.3rem;
+          position: relative;
+          img {
+            width: 100%;
+            height: auto;
+          }
+        }
+      }
+      .slider-arrow-left {
+        cursor: pointer;
+        border-radius: 0rem 2.5rem 2.5rem 0rem;
+        background-color: #fff;
+        position: absolute;
+        left: 0.9rem;
+        top: 45%;
+        width: 2rem;
+        height: 4rem;
+        padding: 1.1rem 1rem 0rem 0rem;
+        text-align: center;
+        color: #103464;
+        box-shadow: 3px 1px 3px 1px grey;
+        cursor: pointer;
+      }
+  
+      .slider-arrow-right {
+        cursor: pointer;
+        border-radius: 2.5rem 0rem 0rem 2.5rem;
+        background-color: #fff;
+        position: absolute;
+        right: 0.9rem;
+        top: 45%;
+        width: 2rem;
+        height: 4rem;
+        padding: 1.1rem 0rem 0rem 0.5rem;
+        text-align: center;
+        color: #103464;
+        box-shadow: -3px 0px 3px 1px grey;
+        cursor: pointer;
+      }
+    }
+  }
+  
