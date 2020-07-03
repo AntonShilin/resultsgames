@@ -140,8 +140,11 @@ div.page {
           margin: 0rem 0.3rem 0rem 0.3rem;
           position: relative;
           img {
+            padding-bottom: 1px;
+            border-bottom: 3px solid transparent;
             width: 100%;
             height: auto;
+           
           }
         }
       }
@@ -178,4 +181,7 @@ div.page {
       }
     }
   }
-  
+  .currentImg{
+    padding-bottom: 1px;
+    border-bottom: 3px solid rgb(235, 27, 62) !important;
+  }

@@ -40,12 +40,24 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="/__/firebase/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 
-    <!-- Initialize Firebase -->
-    <script src="/__/firebase/init.js"></script>
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyD4qlaShkLo6lK4ASzyTfawxjO4kTP74R8",
+        authDomain: "football-results-20050.firebaseapp.com",
+        databaseURL: "https://football-results-20050.firebaseio.com",
+        projectId: "football-results-20050",
+        storageBucket: "football-results-20050.appspot.com",
+        messagingSenderId: "564525997988",
+        appId: "1:564525997988:web:0941004a153a0c503fab31",
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
   </body>
 </html>

@@ -136,6 +136,7 @@ class MatchFullResults extends React.Component<IMatchFullResultProps, State> {
                             (match, i) => (
                               <div key={i} className="thumbnail_videos_items">
                                 <img
+                                className={number_of_video===i ? 'currentImg' : undefined}
                                   src={
                                     this.props.allResults![matchID!].thumbnail
                                   }

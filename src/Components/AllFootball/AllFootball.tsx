@@ -7,7 +7,6 @@ import {
   toggleResultPanel,
   viewMoreMatchInfo,
   getMatchID,
-  sortingAllMatchesByDate,
 } from "../../Actions/Actions";
 import "./AllFootball.scss";
 import { MdKeyboardArrowUp } from "react-icons/md";
