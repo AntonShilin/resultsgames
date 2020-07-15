@@ -3,15 +3,14 @@ import {
     MainActions,
     GetDataResultsTypes,
     ToggleFooterTypes,
-    ToggleSmallMenuScreenTypes,
     toggleRezultPanelTypes,
     viewMoreMatchInfoTypes,
     sliderArrowsTypes,
     returnPrevPageTypes,
     isLoadingTypes,
     GetMatchIdTypes,
+    SortingAllMatchesByDateTypes,
   } from "../Types/Types";
-  import { Reducer } from "react";
   
   const initialState: IMainState = {
     data: null,
@@ -19,12 +18,13 @@ import {
     isLoading: false,
     matchID: null,
     number_of_video: 0,
+    sortingMatchesByDate: null
   };
   
-  export const stateReducer: Reducer<IMainState , MainActions> = (
-    state = initialState,
-    action
-  ) => {
+  export const stateReducer = (
+    state:IMainState = initialState,
+    action:MainActions
+  ): IMainState => {
     switch (action.type) {
       case GetDataResultsTypes.GETDATARESULTS: {
   
@@ -48,11 +48,6 @@ import {
         };
       }
         
-      case ToggleSmallMenuScreenTypes.TOGGLESMALLMENUSCREEN: {
-        return {
-          ...state,
-        };
-      }
   
       case viewMoreMatchInfoTypes.VIEWMOREMATCHINFO: {
         return {
@@ -91,6 +86,13 @@ import {
         return {
           ...state,
           matchID: Number(action.id),
+        };
+      }
+        
+      case SortingAllMatchesByDateTypes.SORTINGALLMATCHESBYDATE: {
+        return {
+          ...state,
+          sortingMatchesByDate: action.sortingByDate
         };
       }
         

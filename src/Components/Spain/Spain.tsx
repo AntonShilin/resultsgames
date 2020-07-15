@@ -10,6 +10,7 @@ import {
   getMatchID,
 } from "../../Actions/Actions";
 import { MdKeyboardArrowUp } from "react-icons/md";
+import { IApplicationState } from "../../Store/Store";
 
 export interface ISpainProps {
   allfootball: IData[] | null;
@@ -31,7 +32,7 @@ class Spain extends React.Component<ISpainProps, State> {
 
   componentDidMount() {
     if (this.props.allfootball === null) {
-      this.props.getData("https://www.scorebat.com/video-api/v1/");
+      this.props.getData();
     }
   }
 
@@ -142,7 +143,7 @@ class Spain extends React.Component<ISpainProps, State> {
   }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: IApplicationState) => {
   return {
     allfootball: state.allResults.data,
     similar_years: state.allResults.similar_years,
@@ -151,7 +152,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    getData: (url: RequestInfo) => dispatch(getData(url)),
+    getData: () => dispatch(getData()),
     getMatchID: (id: number) => dispatch(getMatchID(id)),
     toggleResultPanel: (value: any, e: any) =>
       dispatch(toggleResultPanel(value, e)),

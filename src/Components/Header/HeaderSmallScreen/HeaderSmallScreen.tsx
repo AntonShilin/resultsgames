@@ -4,22 +4,32 @@ import { connect } from "react-redux";
 import "./HeaderSmallScreen.scss";
 import allfootball from "../../../media/img/allfootball.png";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { toggleMenuSmallScreen } from "../../../Actions/Actions";
 
-export interface Props extends RouteComponentProps {
-  toggleMenuSmallScreen: typeof toggleMenuSmallScreen;
+export interface Props extends RouteComponentProps {}
+
+export interface IHeaderSmallScreenState {
+  isMenuShow: boolean;
 }
 
-export interface State {}
-
-class HeaderSmallScreen extends React.Component<Props, State> {
-  smallMenuScreen: React.RefObject<HTMLDivElement>;
+class HeaderSmallScreen extends React.Component<
+  Props,
+  IHeaderSmallScreenState
+> {
   constructor(props: Props) {
     super(props);
-    this.smallMenuScreen = React.createRef();
+    this.state = { isMenuShow: false };
+    this.toggleSmallScreenMenu = this.toggleSmallScreenMenu.bind(this);
   }
+
+  toggleSmallScreenMenu = () => {
+    this.setState({
+      isMenuShow: !this.state.isMenuShow,
+    });
+  };
+
   render() {
     const currentPage = this.props.location.pathname.match(/\w+/);
+
     return (
       <React.Fragment>
         <div className="container-xl d-lg-none d-md-none d-sm-block d-xs-block">
@@ -27,7 +37,11 @@ class HeaderSmallScreen extends React.Component<Props, State> {
             <div className="col-2 d-flex justify-content-end">
               <figure className="mb-0">
                 <img
-                  src={currentPage!==null ? require(`../../../media/img/${currentPage[0]}.png`): allfootball}
+                  src={
+                    currentPage !== null
+                      ? require(`../../../media/img/${currentPage[0]}.png`)
+                      : allfootball
+                  }
                   alt="img"
                   className="img-fluid"
                 />
@@ -35,23 +49,28 @@ class HeaderSmallScreen extends React.Component<Props, State> {
             </div>
             <div className="col-8 d-flex justify-content-start">
               <NavLink to={`/${currentPage}`}>
-                <p className="text-center mb-0 small">{currentPage!==null ? currentPage[0].toUpperCase() : ''}</p>
+                <p className="text-center mb-0 small">
+                  {currentPage !== null && currentPage[0].toUpperCase()}
+                </p>
               </NavLink>
             </div>
             <div className="col-2 d-flex justify-content-end">
               <button
                 className="small_screen_arrow"
-                onClick={e =>
-                  this.props.toggleMenuSmallScreen(this.smallMenuScreen, e)
-                }
+                onClick={this.toggleSmallScreenMenu}
               >
-                <MdKeyboardArrowDown />
+                {this.state.isMenuShow ? (
+                  <MdKeyboardArrowDown className="arrow_down" />
+                ) : (
+                  <MdKeyboardArrowDown className="arrow_up" />
+                )}
               </button>
             </div>
           </div>
           <div
-            className="row align-items-center list_small_screen_menu"
-            ref={this.smallMenuScreen}
+            className={`row align-items-center list_small_screen_menu ${
+              this.state.isMenuShow && " show_menu"
+            }`}
           >
             <div className="col-lg-2 col-md-2 p-2">
               <NavLink to="/allfootball">
@@ -90,11 +109,6 @@ class HeaderSmallScreen extends React.Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    toggleMenuSmallScreen: (elem: any, e: any) =>
-      dispatch(toggleMenuSmallScreen(elem, e))
-  };
-};
+const withURLDataHeaderSmallScreen = withRouter(HeaderSmallScreen);
 
-export default withRouter(connect(null, mapDispatchToProps)(HeaderSmallScreen));
+export default connect(null, null)(withURLDataHeaderSmallScreen);

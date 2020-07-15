@@ -1,26 +1,30 @@
 import {
   GetDataResultsTypes,
   ToggleFooterTypes,
-  ToggleSmallMenuScreenTypes,
   toggleRezultPanelTypes,
   viewMoreMatchInfoTypes,
   sliderArrowsTypes,
   returnPrevPageTypes,
   isLoadingTypes,
   GetMatchIdTypes,
-  IData,
   IGetMatchIdAction,
   ILoadingAction,
   IReturnPrevPageAction,
   IClickSliderRightAction,
   IClickSliderLeftAction,
   IViewMoreMatchInfoAction,
-  IToggleSmallMenuActionAction,
   IToggleFooterAction,
   IResultPanelAction,
+  SortingAllMatchesByDateTypes,
+  ISortingAllMatchesByDateAction,
+  IData,
+  IToggleCalendarAction,
+  ToggleCalendarTypes,
+  ISelectMatchDayAction,
+  SelectMatchDayTypes,
 } from "../Types/Types";
-import { Dispatch, ActionCreator, Action } from "redux";
-
+import { Dispatch } from "redux";
+import { MatchesByDate } from "../Components/AllFootball/AllFootball";
 
 const getSimilarYears = (arr: any) => {
   const similarYears: any[] = [];
@@ -42,10 +46,11 @@ const addID = (data: any[]) => {
   return data;
 };
 
-export const getData = (url: RequestInfo) => {
+/* get all matches data */
+export const getData = () => {
   return (dispatch: Dispatch) => {
     dispatch(loading());
-    fetch(url)
+    fetch("https://www.scorebat.com/video-api/v1/")
       .then((response) => {
         if (!response.ok) {
           throw new Error(response.statusText);
@@ -74,10 +79,7 @@ export const analysisTotal = (elem: { title: any }[]) => {
   }
 };
 
-export const toggleResultPanel: ActionCreator<IResultPanelAction> = (
-  elem: any,
-  e: any
-) => {
+export const toggleResultPanel = (elem: any, e: any): IResultPanelAction => {
   e.currentTarget.classList.toggle("arrow-reverse");
 
   // tslint:disable-next-line: prefer-for-of
@@ -90,10 +92,10 @@ export const toggleResultPanel: ActionCreator<IResultPanelAction> = (
   };
 };
 
-export const toggleFooter: ActionCreator<IToggleFooterAction> = (
+export const toggleFooter = (
   elem: any,
   e: React.MouseEvent
-) => {
+): IToggleFooterAction => {
   elem.current.classList.toggle("show");
   e.currentTarget.classList.toggle("move_on");
   return {
@@ -101,21 +103,10 @@ export const toggleFooter: ActionCreator<IToggleFooterAction> = (
   };
 };
 
-export const toggleMenuSmallScreen: ActionCreator<IToggleSmallMenuActionAction> = (
-  elem: any,
-  e: React.MouseEvent
-) => {
-  elem.current.classList.toggle("show_menu");
-  e.currentTarget.classList.toggle("arrow_up");
-  return {
-    type: ToggleSmallMenuScreenTypes.TOGGLESMALLMENUSCREEN,
-  };
-};
-
-export const viewMoreMatchInfo: ActionCreator<IViewMoreMatchInfoAction> = (
+export const viewMoreMatchInfo = (
   e: any,
   url: any
-) => {
+): IViewMoreMatchInfoAction => {
   const id = e.currentTarget.dataset.matchid;
   const path = url.history.location.pathname;
   url.history.push(`${path}/${id}`);
@@ -147,11 +138,10 @@ const matchData = (time: string) => {
 };
 
 /*slider arrow left */
-
-export const clickLeftArrowSlider: ActionCreator<IClickSliderLeftAction> = (
+export const clickLeftArrowSlider = (
   num: number,
   moments: number
-) => {
+): IClickSliderLeftAction => {
   if (num <= 0) {
     num = moments;
   } else {
@@ -165,10 +155,10 @@ export const clickLeftArrowSlider: ActionCreator<IClickSliderLeftAction> = (
 };
 
 /*slider arrow right */
-export const clickRightArrowSlider: ActionCreator<IClickSliderRightAction> = (
+export const clickRightArrowSlider = (
   num: number,
   moments: number
-) => {
+): IClickSliderRightAction => {
   if (moments === num) {
     num = 0;
   } else {
@@ -182,9 +172,7 @@ export const clickRightArrowSlider: ActionCreator<IClickSliderRightAction> = (
 };
 
 /* go back prev page */
-export const returnPrevPage: ActionCreator<IReturnPrevPageAction> = (
-  url: any
-) => {
+export const returnPrevPage = (url: any): IReturnPrevPageAction => {
   url.goBack();
   return {
     type: returnPrevPageTypes.PREVPAGE,
@@ -192,18 +180,56 @@ export const returnPrevPage: ActionCreator<IReturnPrevPageAction> = (
 };
 
 /* preload page */
-const loading: ActionCreator<ILoadingAction> = () => {
+const loading = (): ILoadingAction => {
   return {
     type: isLoadingTypes.LOADING,
   };
 };
 
 /* get match ID*/
-export const getMatchID: ActionCreator<IGetMatchIdAction> = (id: number) => {
+export const getMatchID = (id: number): IGetMatchIdAction => {
   return {
     type: GetMatchIdTypes.GETMATCHID,
     id,
   };
 };
 
+/* sorting all matches by date */
+export const sortingByDate = (
+  similarYears: any,
+  allfootball: any
+): ISortingAllMatchesByDateAction => {
+  const sortingMatchesByDate: MatchesByDate[] = [];
 
+  similarYears.map((year: string, i: number) => {
+    sortingMatchesByDate!.push([year]);
+
+    allfootball!.map((match: IData, k: number) =>
+      match.date.match(year) !== null
+        ? sortingMatchesByDate![i].push(match)
+        : null
+    );
+  });
+
+  return {
+    type: SortingAllMatchesByDateTypes.SORTINGALLMATCHESBYDATE,
+    sortingByDate: sortingMatchesByDate,
+  };
+};
+
+
+/* show / hide calendar */
+export const toggleCalendar = (value: boolean): IToggleCalendarAction => {
+  return {
+    type: ToggleCalendarTypes.TOGGLECALENDAR,
+    value: !value
+  };
+};
+
+/* select match day in calendar */
+export const selectMatchDayInCalendar = (day: number): ISelectMatchDayAction => {
+  return {
+    type: SelectMatchDayTypes.SELECTMATCHDAY,
+    value: day
+  };
+};

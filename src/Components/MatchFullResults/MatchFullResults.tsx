@@ -17,6 +17,7 @@ import { IoIosFootball } from "react-icons/io";
 import { FaAngleRight } from "react-icons/fa";
 import { FaAngleLeft } from "react-icons/fa";
 import Preloader from "../Preloader/Preloader";
+import { IApplicationState } from "../../Store/Store";
 
 export interface IMatchFullResultProps extends RouteComponentProps {
   allResults: IData[] | null;
@@ -212,7 +213,7 @@ class MatchFullResults extends React.Component<IMatchFullResultProps, State> {
   }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: IApplicationState) => {
   return {
     allResults: state.allResults.data,
     isLoading: state.allResults.isLoading,
@@ -223,7 +224,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    getData: (url: RequestInfo) => dispatch(getData(url)),
+    getData: () => dispatch(getData()),
     clickLeftArrowSlider: (num: number, moments: number) =>
       dispatch(clickLeftArrowSlider(num, moments)),
     clickRightArrowSlider: (num: number, moments: number) =>

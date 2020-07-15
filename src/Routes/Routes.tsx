@@ -11,6 +11,8 @@ import Spain from "../Components/Spain/Spain";
 import Italy from "../Components/Italy/Italy";
 import Germany from "../Components/Germany/Germany";
 import France from "../Components/France/France";
+import SortMatchesByDate from "../Components/SortMatchesByDate/SortMatchesByDate";
+import SortMatchesByDay from "../Components/SortMatchesByDay/SortMatchesByDay";
 
 export interface Props {}
 
@@ -21,6 +23,8 @@ class Routes extends React.Component {
     return (
       <Switch>
         <Route exact={true} path="/allfootball" component={AllFootbal} />
+        <Route exact={true} path="/allfootball/sortbydate" component={SortMatchesByDate} />
+        <Route exact={true} path="/allfootball/sortbyday" component={SortMatchesByDay} />
         <Route exact={true} path="/england" component={England} />
         <Route exact={true} path="/spain" component={Spain} />
         <Route exact={true} path="/italy" component={Italy} />
