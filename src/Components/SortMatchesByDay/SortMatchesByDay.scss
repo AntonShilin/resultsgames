@@ -1,0 +1,88 @@
+div {
+    p.footbal_result {
+      font-size: 1.625rem;
+      font-weight: 500;
+      color: #000;
+      span {
+        color: #788089;
+      }
+    }
+    p.match_data {
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: #000;
+      letter-spacing: 0.06em;
+    }
+    span.calendar_icon {
+      height: auto;
+      margin-bottom: 0.25rem;
+      svg {
+        font-size: 1.8rem;
+        text-align: center;
+        cursor: pointer;
+        color: darkblue;
+        &:hover{
+          color: rgb(216, 30, 92);
+        }
+      }
+    }
+    p.localtime {
+      font-size: 0.8125rem;
+      color: #788089;
+    }
+  }
+  
+  div.row > div > .league_info {
+    min-height: 4rem;
+    background-color: rgb(243, 243, 246);
+    &:hover {
+      cursor: pointer;
+    }
+    .arrow {
+      transform: rotate(0deg);
+    }
+    .arrow-reverse {
+      display: inline-block;
+      transform: rotate(180deg);
+    }
+  }
+  
+  div.day {
+    padding-left: 8rem;
+    span {
+      font-weight: 500;
+      font-size: 1.125rem;
+      color: #000;
+      letter-spacing: 0.06em;
+    }
+  }
+  
+  div.match-score-show {
+    overflow: hidden;
+    min-height: 4.5rem;
+    background-color: rgb(255, 255, 255);
+    transition: min-height 0.3s, font-size 0.3s;
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+    &:hover {
+      cursor: pointer;
+      background-color: rgb(16, 52, 100);
+      color: #ffffff;
+    }
+    div > p {
+      overflow: hidden;
+    }
+    .match-competition-name > p {
+      overflow: hidden;
+      text-overflow: ellipsis !important;
+      white-space: nowrap;
+    }
+  }
+  
+  div.match-score-hide {
+    transition: min-height 0.3s, font-size 0.3s;
+    min-height: 0rem;
+    font-size: 0rem;
+    margin-bottom: 0rem;
+  }
+  

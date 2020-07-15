@@ -18,6 +18,7 @@ import { FaAngleRight } from "react-icons/fa";
 import { FaAngleLeft } from "react-icons/fa";
 import Preloader from "../Preloader/Preloader";
 import { IApplicationState } from "../../Store/Store";
+import ReturnPrevPage from "../ReturnPrevPage/ReturnPrevPage";
 
 export interface IMatchFullResultProps extends RouteComponentProps {
   allResults: IData[] | null;
@@ -61,23 +62,7 @@ class MatchFullResults extends React.Component<IMatchFullResultProps, State> {
             {this.props.allResults !== null ? (
               <React.Fragment>
                 <div className="container-xl">
-                  <div className="row mt-3">
-                    <div className="col-12">
-                      <span
-                        className="prev_page"
-                        onClick={() =>
-                          this.props.returnPrevPage(this.props.history)
-                        }
-                      >
-                        <IoIosArrowBack
-                          style={{
-                            fontSize: "1.5rem",
-                            color: "#788089",
-                          }}
-                        />
-                      </span>
-                    </div>
-                  </div>
+                <ReturnPrevPage />
                 </div>
                 <div className="container-xl mt-5 mb-5 desk_result">
                   <div className="row">

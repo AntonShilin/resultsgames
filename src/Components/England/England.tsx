@@ -10,8 +10,9 @@ import {
   getMatchID,
 } from "../../Actions/Actions";
 import { MdKeyboardArrowUp } from "react-icons/md";
-import { MatchesByDate } from "../AllFootball/AllFootball";
 import { IApplicationState } from "../../Store/Store";
+import { MatchesByDate } from "../../Reducer/calendarReducer";
+
 
 export interface IEnglandProps {
   allfootball: IData[] | null;

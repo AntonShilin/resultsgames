@@ -17,7 +17,7 @@ import { IApplicationState } from "../../Store/Store";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import Calendar from "../Calendar/Calendar";
 
-export type MatchesByDate = [string?, IData?];
+
 
 export interface IAllFootballProps {
   allfootball: IData[] | null;
@@ -51,9 +51,31 @@ class AllFootball extends React.Component<IAllFootballProps, State> {
     this.arrMatchResult.push(node);
   };
 
+  public matchData = (time: string) => {
+    const d = new Date(time);
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const dayOfMonth = d.getDate();
+    const month = months[d.getMonth()];
+    const year = d.getFullYear();
+    return `${dayOfMonth} ${month} ${year}`;
+  };
+
   public render() {
     const { similar_years, allfootball ,isCalendarShow} = this.props;
-
+console.log(this.props)
     return (
       <React.Fragment>
         {!this.props.allfootball ? (
@@ -68,16 +90,15 @@ class AllFootball extends React.Component<IAllFootballProps, State> {
               </div>
               <div className="col-4" />
               <div className="col-4 h-25">
-                <span>
+                <span className="calendar_icon">
                   <GoCalendar
                     onClick={() => {
                       this.props.toggleCalendar(this.props.isCalendarShow);
                       this.props.sortingByDate(
-                        this.props.similar_years,
-                        this.props.allfootball
+                        similar_years,
+                        allfootball
                       );
                     }}
-                    style={{ fontSize: "1.5rem" }}
                     />
                     {isCalendarShow && <Calendar/>}
                 </span>
@@ -91,7 +112,7 @@ class AllFootball extends React.Component<IAllFootballProps, State> {
                 <div className="col-12 text-center">
                   <div className="row league_info align-items-center mb-2">
                     <div className="col-10 day">
-                      <span className="">{elem.date}</span>
+                      <span className="">{this.matchData(elem.date)}</span>
                     </div>
                     <div className="col-2">
                       <span
@@ -158,7 +179,7 @@ const mapDispatchToProps = (dispatch: any) => {
     getData: () => dispatch(getData()),
     toggleCalendar: (value:boolean) => dispatch(toggleCalendar(value)),
     getMatchID: (id: number) => dispatch(getMatchID(id)),
-    toggleResultPanel: (value: any, e: React.MouseEvent) =>
+    toggleResultPanel: (value: any, e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
       dispatch(toggleResultPanel(value, e)),
     viewMoreMatchInfo: (e: React.MouseEvent, url: any) =>
       dispatch(viewMoreMatchInfo(e, url)),
@@ -166,5 +187,6 @@ const mapDispatchToProps = (dispatch: any) => {
       dispatch(sortingByDate(similarYears, allfootball)),
   };
 };
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllFootball);

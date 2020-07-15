@@ -1,6 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { IData } from "../../Types/Types";
+import "./SortMatchesByDay.scss";
 import {
   getData,
   analysisTotal,
@@ -12,6 +13,8 @@ import {
 import Preloader from "../Preloader/Preloader";
 import { IApplicationState } from "../../Store/Store";
 import { MdKeyboardArrowUp } from "react-icons/md";
+import ReturnPrevPage from "../ReturnPrevPage/ReturnPrevPage";
+import { MatchesByDate } from "../../Reducer/calendarReducer";
 
 export interface ISortMatchesByDayProps {
   allfootball: IData[] | null;
@@ -22,7 +25,7 @@ export interface ISortMatchesByDayProps {
   getMatchID: typeof getMatchID;
   viewMoreMatchInfo: typeof viewMoreMatchInfo;
   sortingByDate: typeof sortingByDate;
-  sortingMatchesByDate: any | null;
+  sortingMatchesByDate: MatchesByDate[] | null;
   selectDay: number | null;
 }
 
@@ -40,7 +43,7 @@ class SortMatchesByDay extends React.Component<ISortMatchesByDayProps, State> {
       this.props.getData();
     }
 
-    if (!this.props.sortingMatchesByDate) {
+    if (this.props.sortingMatchesByDate == null) {
       this.props.sortingByDate(
         this.props.similar_years!,
         this.props.allfootball!
@@ -53,83 +56,107 @@ class SortMatchesByDay extends React.Component<ISortMatchesByDayProps, State> {
   };
 
   public render() {
+    const d = new Date();
+    const day =
+      this.props.selectDay! < 10
+        ? "0" + this.props.selectDay
+        : this.props.selectDay;
+    const month =
+      new Date().getMonth() + 1 < 10
+        ? "0" + (new Date().getMonth() + 1)
+        : new Date().getMonth() + 1;
+    const year = new Date().getFullYear();
+    const fullDate = `${year}-${month}-${day}`;
 
     return (
       <React.Fragment>
-        {!this.props.sortingMatchesByDate ? (
+        {this.props.sortingMatchesByDate === null ? (
           <Preloader />
         ) : (
-          <div className="container-xl pt-5">
-            <div className="row align-items-center">
-              <div className="col-4">
-                <p className="footbal_result">
-                  Football <span>Results</span>
-                </p>
-              </div>
-              <div className="col-4" />
-              <div className="col-4 h-25">
-                <p className="local_time">
-                  All times are shown in your local time
-                </p>
-              </div>
-            </div>
-            {this.props.sortingMatchesByDate.map((elem: any, k: number) => (
-              <div key={k} className="row mb-3">
-                <div className="col-12 text-center">
-                  <div className="row league_info align-items-center mb-2">
-                    <div className="col-10 day">
-                      <span className="">{elem[0]}</span>
+          <div className="container-xl pt-2">
+            <ReturnPrevPage />
+            {this.props.sortingMatchesByDate.map(
+              (elem: MatchesByDate, k: number) =>
+                elem[0] === fullDate && (
+                  <div className="row align-items-center">
+                    <div className="col-4">
+                      <p className="footbal_result">
+                        Football <span>Results</span>
+                      </p>
                     </div>
-                    <div className="col-2">
-                      <span
-                        className="arrow"
-                        onClick={(e) =>
-                          this.props.toggleResultPanel(
-                            this.arrMatchResult[k],
-                            e
-                          )
-                        }
-                      >
-                        <MdKeyboardArrowUp style={{ fontSize: "1.5rem" }} />
-                      </span>
+                    <div className="col-4" />
+                    <div className="col-4 h-25">
+                      <p className="local_time">
+                        All times are shown in your local time
+                      </p>
                     </div>
                   </div>
-                </div>
-                <div className="col-12">
-                  <div className="row panel-body" ref={this.setRef}>
-                    {elem!.map((match: any, i: number) =>
-                      match.competition !== undefined ? (
-                        <div key={i} className="col-12">
-                          <div
-                            data-matchid={i}
-                            onClick={(e) => {
-                              this.props.viewMoreMatchInfo(e, this.props);
-                              this.props.getMatchID(match.id!);
-                            }}
-                            className="row align-items-center match-score-show"
-                          >
-                            <div className="col-3 match-competition-name">
-                              <p className="mb-0">{match.competition.name}</p>
-                            </div>
-                            <div className="col-3 text-start">
-                              <p className="mb-0">{match.side1.name}</p>
-                            </div>
-                            <div className="col-3 text-start">
-                              <p className="mb-0">
-                                {analysisTotal(match.videos)}
-                              </p>
-                            </div>
-                            <div className="col-3 text-start">
-                              <p className="mb-0">{match.side2.name}</p>
-                            </div>
-                          </div>
+                )
+            )}
+            {this.props.sortingMatchesByDate.map(
+              (elem: MatchesByDate, k: number) =>
+                elem[0] === fullDate && (
+                  <div key={k} className="row mb-3">
+                    <div className="col-12 text-center">
+                      <div className="row league_info align-items-center mb-2">
+                        <div className="col-10 day">
+                          <span className="">{elem[0]}</span>
                         </div>
-                      ) : null
-                    )}
+                        <div className="col-2">
+                          <span
+                            className="arrow"
+                            onClick={(e) =>
+                              this.props.toggleResultPanel(
+                                this.arrMatchResult[k],
+                                e
+                              )
+                            }
+                          >
+                            <MdKeyboardArrowUp style={{ fontSize: "1.5rem" }} />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="row panel-body" ref={this.setRef}>
+                        {elem.map(
+                          (match: string | IData | undefined, i: number) =>
+                            typeof match !== "string" &&
+                            typeof match !== "undefined" && (
+                              <div key={i} className="col-12">
+                                <div
+                                  data-matchid={i}
+                                  onClick={(e) => {
+                                    this.props.viewMoreMatchInfo(e, this.props);
+                                    this.props.getMatchID(match.id!);
+                                  }}
+                                  className="row align-items-center match-score-show"
+                                >
+                                  <div className="col-3 match-competition-name">
+                                    <p className="mb-0">
+                                      {match.competition.name}
+                                    </p>
+                                  </div>
+                                  <div className="col-3 text-start">
+                                    <p className="mb-0">{match.side1.name}</p>
+                                  </div>
+                                  <div className="col-3 text-start">
+                                    <p className="mb-0">
+                                      {analysisTotal(match.videos)}
+                                    </p>
+                                  </div>
+                                  <div className="col-3 text-start">
+                                    <p className="mb-0">{match.side2.name}</p>
+                                  </div>
+                                </div>
+                              </div>
+                            )
+                        )}
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                )
+            )}
           </div>
         )}
       </React.Fragment>
@@ -151,8 +178,10 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     getData: () => dispatch(getData()),
     getMatchID: (id: number) => dispatch(getMatchID(id)),
-    toggleResultPanel: (value: any, e: React.MouseEvent) =>
-      dispatch(toggleResultPanel(value, e)),
+    toggleResultPanel: (
+      elem: HTMLDivElement,
+      e: React.MouseEvent<HTMLSpanElement, MouseEvent>
+    ) => dispatch(toggleResultPanel(elem, e)),
     viewMoreMatchInfo: (e: React.MouseEvent, url: any) =>
       dispatch(viewMoreMatchInfo(e, url)),
     sortingByDate: (similarYears: any, allfootball: any) =>

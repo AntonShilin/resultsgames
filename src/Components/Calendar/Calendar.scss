@@ -1,14 +1,14 @@
 .calendar_item {
   position: absolute;
   top: 50%;
-  right: 5%;
+  right: 20%;
   z-index: 5;
   max-width: 15rem;
-  border: 1px solid #1abc9c;
+  border: 1px solid rgb(194, 192, 192);
 
   .month {
     padding: 0.3rem;
-    background: #1abc9c;
+    background: #103464;
     text-align: center;
     div {
       color: white;
@@ -42,26 +42,38 @@
       margin-bottom: 0.5rem;
       font-size: 1rem;
       color: #777;
-      .active {
+      a {
+        text-decoration: none;
         padding: 5px;
-        background: #1abc9c;
+        cursor: pointer;
+        &:hover{
+          background-color: lightgrey;
+        }
+      }
+      a.current_day {
+        text-decoration: none;
+        padding: 5px;
+        cursor: pointer;
         color: white !important;
+        background: #1895ce;
+        &:hover{
+          background-color: lightgrey;
+        }
       }
     }
   }
   .last_few_days {
-    background: #1abc9c;
+    background: #103464;
     text-align: center;
     padding: 0.3rem;
     cursor: pointer;
-    a{
-        font-size: .9rem;
-        color: white !important;
-        text-decoration: none;
+    a {
+      font-size: 0.9rem;
+      color: white !important;
+      text-decoration: none;
     }
-    &:hover{
-        background: #1abc9ca8 !important;
-        color: rgba(255, 0, 76, 0.973) !important;
+    &:hover {
+      background: #f7105df5 !important;
     }
   }
 }

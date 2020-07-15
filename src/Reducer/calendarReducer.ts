@@ -1,7 +1,9 @@
-import { MainActions, SortingAllMatchesByDateTypes, ToggleCalendarTypes, SelectMatchDayTypes } from "../Types/Types";
+import { MainActions, SortingAllMatchesByDateTypes, ToggleCalendarTypes, SelectMatchDayTypes, IData } from "../Types/Types";
+
+export type MatchesByDate = [string?, IData?];
 
 export interface IFilterState {
-    sortingMatchesByDate: any | null;
+    sortingMatchesByDate: MatchesByDate[] | null;
     isCalendarShow: boolean;
     selectDay: number | null;
 }

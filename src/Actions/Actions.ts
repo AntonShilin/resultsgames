@@ -24,7 +24,7 @@ import {
   SelectMatchDayTypes,
 } from "../Types/Types";
 import { Dispatch } from "redux";
-import { MatchesByDate } from "../Components/AllFootball/AllFootball";
+import { MatchesByDate } from "../Reducer/calendarReducer";
 
 const getSimilarYears = (arr: any) => {
   const similarYears: any[] = [];
@@ -79,9 +79,13 @@ export const analysisTotal = (elem: { title: any }[]) => {
   }
 };
 
-export const toggleResultPanel = (elem: any, e: any): IResultPanelAction => {
+export const toggleResultPanel = (
+  elem: HTMLDivElement,
+  e: React.MouseEvent<HTMLSpanElement, MouseEvent>
+): IResultPanelAction => {
   e.currentTarget.classList.toggle("arrow-reverse");
 
+  console.log(elem);
   // tslint:disable-next-line: prefer-for-of
   for (let i = 0; i < elem.children.length; i++) {
     elem.children[i].children[0].classList.toggle("match-score-hide");
@@ -113,28 +117,6 @@ export const viewMoreMatchInfo = (
   return {
     type: viewMoreMatchInfoTypes.VIEWMOREMATCHINFO,
   };
-};
-
-const matchData = (time: string) => {
-  const d = new Date(time);
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const dayOfMonth = d.getDate();
-  const month = months[d.getMonth()];
-  const year = d.getFullYear();
-  return `${dayOfMonth} ${month} ${year}`;
 };
 
 /*slider arrow left */
@@ -217,19 +199,20 @@ export const sortingByDate = (
   };
 };
 
-
 /* show / hide calendar */
 export const toggleCalendar = (value: boolean): IToggleCalendarAction => {
   return {
     type: ToggleCalendarTypes.TOGGLECALENDAR,
-    value: !value
+    value: !value,
   };
 };
 
 /* select match day in calendar */
-export const selectMatchDayInCalendar = (day: number): ISelectMatchDayAction => {
+export const selectMatchDayInCalendar = (
+  day: number
+): ISelectMatchDayAction => {
   return {
     type: SelectMatchDayTypes.SELECTMATCHDAY,
-    value: day
+    value: day,
   };
 };

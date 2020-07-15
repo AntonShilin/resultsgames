@@ -6,7 +6,6 @@ import { NavLink } from "react-router-dom";
 import { selectMatchDayInCalendar } from "../../Actions/Actions";
 
 export interface ICalendarProps {
-  isCalendarShow: boolean;
   selectMatchDayInCalendar: typeof selectMatchDayInCalendar;
   sortingMatchesByDate: any | null;
 }
@@ -14,7 +13,7 @@ export interface ICalendarProps {
 export interface State {}
 
 class Calendar extends React.Component<ICalendarProps, State> {
-  drawDays = () => {
+  drawingDays = () => {
     const divs = [];
     let i = 0;
     const len = 31;
@@ -28,12 +27,18 @@ class Calendar extends React.Component<ICalendarProps, State> {
             {k === day ? (
               <NavLink
                 to="/allfootball/sortbyday"
+                className="current_day"
                 onClick={() => this.props.selectMatchDayInCalendar(k)}
               >
                 {k}
               </NavLink>
             ) : (
-              k
+              <NavLink
+                to="/allfootball/sortbyday"
+                onClick={() => this.props.selectMatchDayInCalendar(k)}
+              >
+                {k}
+              </NavLink>
             )}
           </div>
         ))}
@@ -42,7 +47,6 @@ class Calendar extends React.Component<ICalendarProps, State> {
   };
 
   render() {
-    const { isCalendarShow } = this.props;
     const d = new Date();
     const year = d.getFullYear();
     const months = [
@@ -80,14 +84,13 @@ class Calendar extends React.Component<ICalendarProps, State> {
             <div>Su</div>
           </div>
 
-          <div className="days">{this.drawDays()}</div>
+          <div className="days">{this.drawingDays()}</div>
           <div className="last_few_days">
             <NavLink to="/allfootball/sortbydate">
               Show last {this.props.sortingMatchesByDate.length} days
             </NavLink>
           </div>
         </div>
-        )
       </React.Fragment>
     );
   }
@@ -96,7 +99,6 @@ class Calendar extends React.Component<ICalendarProps, State> {
 const mapStateToProps = (state: IApplicationState) => {
   return {
     sortingByDate: state.filter.sortingMatchesByDate,
-    isCalendarShow: state.filter.isCalendarShow,
     sortingMatchesByDate: state.filter.sortingMatchesByDate,
   };
 };
