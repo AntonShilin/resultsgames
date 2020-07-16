@@ -1,20 +1,18 @@
 import * as React from "react";
-import "./England.scss";
+import "./Spain.scss";
 import { connect } from "react-redux";
-import { IData } from "../../Types/Types";
+import { IData } from "../../../Types/Types";
 import {
   getData,
   analysisTotal,
   toggleResultPanel,
   viewMoreMatchInfo,
   getMatchID,
-} from "../../Actions/Actions";
+} from "../../../Actions/Actions";
 import { MdKeyboardArrowUp } from "react-icons/md";
-import { IApplicationState } from "../../Store/Store";
-import { MatchesByDate } from "../../Reducer/calendarReducer";
+import { IApplicationState } from "../../../Store/Store";
 
-
-export interface IEnglandProps {
+export interface ISpainProps {
   allfootball: IData[] | null;
   similar_years: string[];
   getData: typeof getData;
@@ -25,9 +23,9 @@ export interface IEnglandProps {
 
 export interface State {}
 
-class England extends React.Component<IEnglandProps, State> {
-  arrMatchResult: HTMLDivElement[];
-  constructor(props: IEnglandProps) {
+class Spain extends React.Component<ISpainProps, State> {
+  arrMatchResult: any;
+  constructor(props: ISpainProps) {
     super(props);
     this.arrMatchResult = [];
   }
@@ -39,37 +37,32 @@ class England extends React.Component<IEnglandProps, State> {
   }
 
   /* собираем в массив все даты матчей чтобы по клику на стрелку возможно было скрыть/открыть */
-  private setRef = (node: HTMLDivElement) => {
+  private setRef = (node: any) => {
     this.arrMatchResult.push(node);
   };
 
   render() {
-
-    /* только матчи англии */
-    const engmatches: IData[] = [];
-    /*все дни матчей */
-    let matchdates: string[] = [];
-    /* все игры за конкретный день */
-    const matchday: MatchesByDate[] = [];
+    const engmatches: any = [];
+    let matchdates: any = [];
+    /* главный массив для рендера */
+    const matchday: any = [];
 
     /* присваиваем кадому матчу уникальный id, и в engmatche[] отбираем матчи по англии */
-    this.props.allfootball?.map((league:IData, i:number) => {
+    this.props.allfootball?.map((league, i) => {
       league.competition.id = i;
-      if (league.competition.name.search(/ENGLAND/) === 0) {
+      if (league.competition.name.search(/SPAIN/) === 0) {
         engmatches.push(league);
       }
     });
 
     /* в массив  matchdates[] сохраняем дни в которые игрались матчи*/
-    engmatches.map((game: IData, i: number) => {
-      const day:string = game.date.match(/\d+\-\d+\-\d+/)![0]
-      matchdates.push(day);
-      console.log(matchdates)
+    engmatches.map((match: { date: any }, i: any) => {
+      matchdates.push(match.date.match(/\d+\-\d+\-\d+/)[0]);
     });
 
     /* выбираем уникальные даты из matchdates[] */
-    const unique = (arr: string[]) => {
-      const result: string[] = [];
+    const unique = (arr: any) => {
+      const result: any[] = [];
 
       for (const str of arr) {
         if (!result.includes(str)) {
@@ -82,18 +75,18 @@ class England extends React.Component<IEnglandProps, State> {
     matchdates = [...unique(matchdates)];
 
     /* соединяем массивы matchdates и  engmatches для удобства отображения*/
-    matchdates.map((dateday: string, i: number) => {
+    matchdates.map((dateday: any, i: any) => {
       matchday.push([dateday]);
-      
+
       engmatches.map(
-        (match: IData, k: number) =>
+        (match: { date: { match: (arg0: any) => null } }, k: any) =>
           match.date.match(dateday) !== null ? matchday[i].push(match) : null
       );
     });
 
     return (
       <div className="container-xl pt-5">
-        {matchday.map((elem: MatchesByDate, k: number) => (
+        {matchday.map((elem: any[], k: number) => (
           <div key={k} className="row mb-3">
             <div className="col-12 text-center">
               <div className="row league_info align-items-center mb-2">
@@ -114,7 +107,7 @@ class England extends React.Component<IEnglandProps, State> {
             </div>
             <div className="col-12">
               <div className="row panel-body" ref={this.setRef}>
-                {elem.map((match:any, i: number) =>
+                {elem.map((match: any, i: number) =>
                   match.competition !== undefined ? (
                     <div key={i} className="col-12">
                       <div
@@ -163,9 +156,9 @@ const mapDispatchToProps = (dispatch: any) => {
     getMatchID: (id: number) => dispatch(getMatchID(id)),
     toggleResultPanel: (value: any, e: any) =>
       dispatch(toggleResultPanel(value, e)),
-    viewMoreMatchInfo: (e: React.MouseEvent, url: any) =>
+    viewMoreMatchInfo: (e: any, url: any) =>
       dispatch(viewMoreMatchInfo(e, url)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(England);
+export default connect(mapStateToProps, mapDispatchToProps)(Spain);

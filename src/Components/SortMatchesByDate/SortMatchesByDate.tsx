@@ -49,25 +49,20 @@ class SortMatchesByDate extends React.Component<
     }
 
     if (this.props.sortingMatchesByDate === null) {
-      this.props.history.goBack()
+      this.props.history.goBack();
     }
-    
-    
   }
-  
+
   public setRef = (node: HTMLDivElement) => {
     this.arrMatchResult.push(node);
   };
-  
+
   public render() {
-    
     return (
-      <React.Fragment>
-        {!this.props.sortingMatchesByDate ? (
-          <Preloader />
-        ) : (
-          <div className="container-xl pt-3">
-            <ReturnPrevPage />
+      <div className="container-xl pt-3">
+        <ReturnPrevPage />
+        {this.props.sortingMatchesByDate !== null && (
+          <React.Fragment>
             <div className="row align-items-center">
               <div className="col-4">
                 <p className="footbal_result">
@@ -144,9 +139,9 @@ class SortMatchesByDate extends React.Component<
                 </div>
               )
             )}
-          </div>
+          </React.Fragment>
         )}
-      </React.Fragment>
+      </div>
     );
   }
 }

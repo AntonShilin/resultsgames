@@ -27,7 +27,7 @@ class Header extends React.Component<Props, State> {
               </NavLink>
             </div>
             <div className="col-lg-2 col-md-2 p-2">
-              <NavLink to="/england">
+              <NavLink to="/england" activeClassName="active">
                 <figure className="text-center">
                   <img src={england} alt="premer_league" className="img-fluid" />
                 </figure>

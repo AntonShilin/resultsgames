@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { IData } from "../../Types/Types";
+import { IData } from "../../../Types/Types";
 import { RouteComponentProps } from "react-router-dom";
 import {
   analysisTotal,
@@ -8,7 +8,7 @@ import {
   clickLeftArrowSlider,
   clickRightArrowSlider,
   returnPrevPage,
-} from "../../Actions/Actions";
+} from "../../../Actions/Actions";
 import "./MatchFullResults.scss";
 import { IoIosArrowBack } from "react-icons/io";
 import { FaChartLine } from "react-icons/fa";
@@ -16,9 +16,9 @@ import { FiYoutube } from "react-icons/fi";
 import { IoIosFootball } from "react-icons/io";
 import { FaAngleRight } from "react-icons/fa";
 import { FaAngleLeft } from "react-icons/fa";
-import Preloader from "../Preloader/Preloader";
-import { IApplicationState } from "../../Store/Store";
-import ReturnPrevPage from "../ReturnPrevPage/ReturnPrevPage";
+import Preloader from "../../Preloader/Preloader";
+import { IApplicationState } from "../../../Store/Store";
+import ReturnPrevPage from "../../ReturnPrevPage/ReturnPrevPage";
 
 export interface IMatchFullResultProps extends RouteComponentProps {
   allResults: IData[] | null;

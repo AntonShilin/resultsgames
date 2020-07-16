@@ -1,7 +1,7 @@
 .calendar_item {
   position: absolute;
-  top: 50%;
-  right: 20%;
+  top: 3rem;
+  right: -1rem;
   z-index: 5;
   max-width: 15rem;
   border: 1px solid rgb(194, 192, 192);
@@ -26,7 +26,7 @@
     flex-direction: row;
     div {
       width: 4rem;
-      color: #666;
+      color: #3f51b5;
       text-align: center;
     }
   }
@@ -41,8 +41,8 @@
       text-align: center;
       margin-bottom: 0.5rem;
       font-size: 1rem;
-      color: #777;
       a {
+        color: #3b3d41;
         text-decoration: none;
         padding: 5px;
         cursor: pointer;
@@ -58,22 +58,9 @@
         background: #1895ce;
         &:hover{
           background-color: lightgrey;
+          color: #3b3d41 !important;
         }
       }
-    }
-  }
-  .last_few_days {
-    background: #103464;
-    text-align: center;
-    padding: 0.3rem;
-    cursor: pointer;
-    a {
-      font-size: 0.9rem;
-      color: white !important;
-      text-decoration: none;
-    }
-    &:hover {
-      background: #f7105df5 !important;
     }
   }
 }

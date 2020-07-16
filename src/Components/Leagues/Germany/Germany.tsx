@@ -1,18 +1,18 @@
 import * as React from "react";
-import "./Spain.scss";
+import "./Germany.scss";
 import { connect } from "react-redux";
-import { IData } from "../../Types/Types";
+import { IData } from "../../../Types/Types";
 import {
   getData,
   analysisTotal,
   toggleResultPanel,
   viewMoreMatchInfo,
-  getMatchID,
-} from "../../Actions/Actions";
+  getMatchID
+} from "../../../Actions/Actions";
 import { MdKeyboardArrowUp } from "react-icons/md";
-import { IApplicationState } from "../../Store/Store";
+import { IApplicationState } from "../../../Store/Store";
 
-export interface ISpainProps {
+export interface IGermanyProps {
   allfootball: IData[] | null;
   similar_years: string[];
   getData: typeof getData;
@@ -23,9 +23,9 @@ export interface ISpainProps {
 
 export interface State {}
 
-class Spain extends React.Component<ISpainProps, State> {
+class Germany extends React.Component<IGermanyProps, State> {
   arrMatchResult: any;
-  constructor(props: ISpainProps) {
+  constructor(props: IGermanyProps) {
     super(props);
     this.arrMatchResult = [];
   }
@@ -50,7 +50,7 @@ class Spain extends React.Component<ISpainProps, State> {
     /* присваиваем кадому матчу уникальный id, и в engmatche[] отбираем матчи по англии */
     this.props.allfootball?.map((league, i) => {
       league.competition.id = i;
-      if (league.competition.name.search(/SPAIN/) === 0) {
+      if (league.competition.name.search(/GERMANY/) === 0) {
         engmatches.push(league);
       }
     });
@@ -96,7 +96,7 @@ class Spain extends React.Component<ISpainProps, State> {
                 <div className="col-2">
                   <span
                     className="arrow"
-                    onClick={(e) =>
+                    onClick={e =>
                       this.props.toggleResultPanel(this.arrMatchResult[k], e)
                     }
                   >
@@ -112,10 +112,11 @@ class Spain extends React.Component<ISpainProps, State> {
                     <div key={i} className="col-12">
                       <div
                         data-matchid={match.competition.id}
-                        onClick={(e) => {
-                          this.props.viewMoreMatchInfo(e, this.props);
+                        onClick={e => {
+                          this.props.viewMoreMatchInfo(e, this.props)
                           this.props.getMatchID(match.id);
-                        }}
+                        }
+                        }
                         className="row align-items-center match-score-show"
                       >
                         <div className="col-3 match-competition-name">
@@ -146,7 +147,7 @@ class Spain extends React.Component<ISpainProps, State> {
 const mapStateToProps = (state: IApplicationState) => {
   return {
     allfootball: state.allResults.data,
-    similar_years: state.allResults.similar_years,
+    similar_years: state.allResults.similar_years
   };
 };
 
@@ -156,9 +157,8 @@ const mapDispatchToProps = (dispatch: any) => {
     getMatchID: (id: number) => dispatch(getMatchID(id)),
     toggleResultPanel: (value: any, e: any) =>
       dispatch(toggleResultPanel(value, e)),
-    viewMoreMatchInfo: (e: any, url: any) =>
-      dispatch(viewMoreMatchInfo(e, url)),
+    viewMoreMatchInfo: (e: any, url: any) => dispatch(viewMoreMatchInfo(e, url))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Spain);
+export default connect(mapStateToProps, mapDispatchToProps)(Germany);

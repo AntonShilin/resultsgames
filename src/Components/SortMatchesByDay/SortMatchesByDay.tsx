@@ -8,9 +8,7 @@ import {
   toggleResultPanel,
   viewMoreMatchInfo,
   getMatchID,
-  sortingByDate,
 } from "../../Actions/Actions";
-import Preloader from "../Preloader/Preloader";
 import { IApplicationState } from "../../Store/Store";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import ReturnPrevPage from "../ReturnPrevPage/ReturnPrevPage";
@@ -24,7 +22,6 @@ export interface ISortMatchesByDayProps {
   toggleResultPanel: typeof toggleResultPanel;
   getMatchID: typeof getMatchID;
   viewMoreMatchInfo: typeof viewMoreMatchInfo;
-  sortingByDate: typeof sortingByDate;
   sortingMatchesByDate: MatchesByDate[] | null;
   selectDay: number | null;
 }
@@ -42,13 +39,6 @@ class SortMatchesByDay extends React.Component<ISortMatchesByDayProps, State> {
     if (this.props.allfootball === null) {
       this.props.getData();
     }
-
-    if (this.props.sortingMatchesByDate == null) {
-      this.props.sortingByDate(
-        this.props.similar_years!,
-        this.props.allfootball!
-      );
-    }
   }
 
   public setRef = (node: HTMLDivElement) => {
@@ -56,7 +46,6 @@ class SortMatchesByDay extends React.Component<ISortMatchesByDayProps, State> {
   };
 
   public render() {
-    const d = new Date();
     const day =
       this.props.selectDay! < 10
         ? "0" + this.props.selectDay
@@ -69,16 +58,14 @@ class SortMatchesByDay extends React.Component<ISortMatchesByDayProps, State> {
     const fullDate = `${year}-${month}-${day}`;
 
     return (
-      <React.Fragment>
-        {this.props.sortingMatchesByDate === null ? (
-          <Preloader />
-        ) : (
-          <div className="container-xl pt-2">
-            <ReturnPrevPage />
+      <div className="container-xl pt-2">
+        <ReturnPrevPage />
+        {this.props.sortingMatchesByDate !== null && (
+          <React.Fragment>
             {this.props.sortingMatchesByDate.map(
               (elem: MatchesByDate, k: number) =>
                 elem[0] === fullDate && (
-                  <div className="row align-items-center">
+                  <div className="row align-items-center" key={k}>
                     <div className="col-4">
                       <p className="footbal_result">
                         Football <span>Results</span>
@@ -94,9 +81,9 @@ class SortMatchesByDay extends React.Component<ISortMatchesByDayProps, State> {
                 )
             )}
             {this.props.sortingMatchesByDate.map(
-              (elem: MatchesByDate, k: number) =>
+              (elem: MatchesByDate, x: number) =>
                 elem[0] === fullDate && (
-                  <div key={k} className="row mb-3">
+                  <div key={x} className="row mb-3">
                     <div className="col-12 text-center">
                       <div className="row league_info align-items-center mb-2">
                         <div className="col-10 day">
@@ -107,7 +94,7 @@ class SortMatchesByDay extends React.Component<ISortMatchesByDayProps, State> {
                             className="arrow"
                             onClick={(e) =>
                               this.props.toggleResultPanel(
-                                this.arrMatchResult[k],
+                                this.arrMatchResult[x],
                                 e
                               )
                             }
@@ -157,9 +144,9 @@ class SortMatchesByDay extends React.Component<ISortMatchesByDayProps, State> {
                   </div>
                 )
             )}
-          </div>
+          </React.Fragment>
         )}
-      </React.Fragment>
+      </div>
     );
   }
 }
@@ -184,8 +171,6 @@ const mapDispatchToProps = (dispatch: any) => {
     ) => dispatch(toggleResultPanel(elem, e)),
     viewMoreMatchInfo: (e: React.MouseEvent, url: any) =>
       dispatch(viewMoreMatchInfo(e, url)),
-    sortingByDate: (similarYears: any, allfootball: any) =>
-      dispatch(sortingByDate(similarYears, allfootball)),
   };
 };
 

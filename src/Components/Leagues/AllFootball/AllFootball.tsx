@@ -1,35 +1,33 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { IData } from "../../Types/Types";
+import { IData } from "../../../Types/Types";
 import {
   getData,
   analysisTotal,
   toggleResultPanel,
   viewMoreMatchInfo,
   getMatchID,
-  sortingByDate,
   toggleCalendar,
-} from "../../Actions/Actions";
+} from "../../../Actions/Actions";
 import "./AllFootball.scss";
 import { GoCalendar } from "react-icons/go";
-import Preloader from "../Preloader/Preloader";
-import { IApplicationState } from "../../Store/Store";
+import Preloader from "../../Preloader/Preloader";
+import { IApplicationState } from "../../../Store/Store";
 import { MdKeyboardArrowUp } from "react-icons/md";
-import Calendar from "../Calendar/Calendar";
-
-
+import Calendar from "../../Calendar/Calendar";
+import ConvertDate from "../../../HOC/ConvertDate/ConvertDate";
+import PreviousDays from "../../PreviousDays/PreviousDays";
 
 export interface IAllFootballProps {
   allfootball: IData[] | null;
-  similar_years: string[];
   isLoading: boolean;
   isCalendarShow: boolean;
   getData: typeof getData;
   toggleResultPanel: typeof toggleResultPanel;
   getMatchID: typeof getMatchID;
   viewMoreMatchInfo: typeof viewMoreMatchInfo;
-  sortingByDate: typeof sortingByDate;
   toggleCalendar: typeof toggleCalendar;
+  convertDateOfMatch: (time: string) => string;
 }
 
 export interface State {}
@@ -51,34 +49,12 @@ class AllFootball extends React.Component<IAllFootballProps, State> {
     this.arrMatchResult.push(node);
   };
 
-  public matchData = (time: string) => {
-    const d = new Date(time);
-    const months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    const dayOfMonth = d.getDate();
-    const month = months[d.getMonth()];
-    const year = d.getFullYear();
-    return `${dayOfMonth} ${month} ${year}`;
-  };
-
   public render() {
-    const { similar_years, allfootball ,isCalendarShow} = this.props;
-console.log(this.props)
+    const { isCalendarShow } = this.props;
+
     return (
       <React.Fragment>
-        {!this.props.allfootball ? (
+        {this.props.allfootball ===null ? (
           <Preloader />
         ) : (
           <div className="container-xl pt-5">
@@ -90,18 +66,22 @@ console.log(this.props)
               </div>
               <div className="col-4" />
               <div className="col-4 h-25">
-                <span className="calendar_icon">
-                  <GoCalendar
-                    onClick={() => {
-                      this.props.toggleCalendar(this.props.isCalendarShow);
-                      this.props.sortingByDate(
-                        similar_years,
-                        allfootball
-                      );
-                    }}
-                    />
-                    {isCalendarShow && <Calendar/>}
-                </span>
+                <div className="row">
+                  <div className="col-6">
+                    <span className="calendar_icon">
+                      <GoCalendar
+                        onClick={() => {
+                          this.props.toggleCalendar(this.props.isCalendarShow);
+                        }}
+                      />
+                      {isCalendarShow && <Calendar />}
+                    </span>
+                  </div>
+                  <div className="col-6">
+                    <PreviousDays />
+                  </div>
+                </div>
+
                 <p className="local_time">
                   All times are shown in your local time
                 </p>
@@ -112,7 +92,9 @@ console.log(this.props)
                 <div className="col-12 text-center">
                   <div className="row league_info align-items-center mb-2">
                     <div className="col-10 day">
-                      <span className="">{this.matchData(elem.date)}</span>
+                      <span className="">
+                        {this.props.convertDateOfMatch(elem.date)}
+                      </span>
                     </div>
                     <div className="col-2">
                       <span
@@ -169,7 +151,6 @@ const mapStateToProps = (state: IApplicationState) => {
   return {
     allfootball: state.allResults.data,
     isLoading: state.allResults.isLoading,
-    similar_years: state.allResults.similar_years,
     isCalendarShow: state.filter.isCalendarShow,
   };
 };
@@ -177,16 +158,17 @@ const mapStateToProps = (state: IApplicationState) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     getData: () => dispatch(getData()),
-    toggleCalendar: (value:boolean) => dispatch(toggleCalendar(value)),
+    toggleCalendar: (value: boolean) => dispatch(toggleCalendar(value)),
     getMatchID: (id: number) => dispatch(getMatchID(id)),
-    toggleResultPanel: (value: any, e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
-      dispatch(toggleResultPanel(value, e)),
+    toggleResultPanel: (
+      value: any,
+      e: React.MouseEvent<HTMLSpanElement, MouseEvent>
+    ) => dispatch(toggleResultPanel(value, e)),
     viewMoreMatchInfo: (e: React.MouseEvent, url: any) =>
       dispatch(viewMoreMatchInfo(e, url)),
-    sortingByDate: (similarYears: any, allfootball: any) =>
-      dispatch(sortingByDate(similarYears, allfootball)),
   };
 };
 
+const withConvertMethod = ConvertDate(AllFootball);
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllFootball);
+export default connect(mapStateToProps, mapDispatchToProps)(withConvertMethod);

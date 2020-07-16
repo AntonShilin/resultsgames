@@ -1,4 +1,4 @@
-import { applyMiddleware, combineReducers, createStore, Store } from "redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
 import { stateReducer } from "../Reducer/stateReducer";
 import thunk from "redux-thunk";
 import { filterReducer } from "../Reducer/calendarReducer";

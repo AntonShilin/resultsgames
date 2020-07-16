@@ -4,13 +4,13 @@ import {
   Route,
   Switch
 } from "react-router-dom";
-import AllFootbal from "../Components/AllFootball/AllFootball";
-import MatchFullResults from "../Components/MatchFullResults/MatchFullResults";
-import England from "../Components/England/England";
-import Spain from "../Components/Spain/Spain";
-import Italy from "../Components/Italy/Italy";
-import Germany from "../Components/Germany/Germany";
-import France from "../Components/France/France";
+import AllFootbal from "../Components/Leagues/AllFootball/AllFootball";
+import MatchFullResults from "../Components/Leagues/MatchFullResults/MatchFullResults";
+import England from "../Components/Leagues/England/England";
+import Spain from "../Components/Leagues/Spain/Spain";
+import Italy from "../Components/Leagues/Italy/Italy";
+import Germany from "../Components/Leagues/Germany/Germany";
+import France from "../Components/Leagues/France/France";
 import SortMatchesByDate from "../Components/SortMatchesByDate/SortMatchesByDate";
 import SortMatchesByDay from "../Components/SortMatchesByDay/SortMatchesByDay";
 

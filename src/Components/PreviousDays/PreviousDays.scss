@@ -1,0 +1,14 @@
+a {
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+  svg {
+    font-size: 1.8rem;
+    color: darkblue;
+  }
+  span {
+    position: absolute;
+    top: -0.5rem;
+    right: 0rem;
+  }
+}

@@ -1,18 +1,20 @@
 import * as React from "react";
-import "./France.scss";
+import "./England.scss";
 import { connect } from "react-redux";
-import { IData } from "../../Types/Types";
+import { IData } from "../../../Types/Types";
 import {
   getData,
   analysisTotal,
   toggleResultPanel,
   viewMoreMatchInfo,
-  getMatchID
-} from "../../Actions/Actions";
+  getMatchID,
+} from "../../../Actions/Actions";
 import { MdKeyboardArrowUp } from "react-icons/md";
-import { IApplicationState } from "../../Store/Store";
+import { IApplicationState } from "../../../Store/Store";
+import { MatchesByDate } from "../../../Reducer/calendarReducer";
 
-export interface FranceProps {
+
+export interface IEnglandProps {
   allfootball: IData[] | null;
   similar_years: string[];
   getData: typeof getData;
@@ -23,9 +25,9 @@ export interface FranceProps {
 
 export interface State {}
 
-class France extends React.Component<FranceProps, State> {
-  arrMatchResult: any;
-  constructor(props: FranceProps) {
+class England extends React.Component<IEnglandProps, State> {
+  arrMatchResult: HTMLDivElement[];
+  constructor(props: IEnglandProps) {
     super(props);
     this.arrMatchResult = [];
   }
@@ -37,32 +39,37 @@ class France extends React.Component<FranceProps, State> {
   }
 
   /* собираем в массив все даты матчей чтобы по клику на стрелку возможно было скрыть/открыть */
-  private setRef = (node: any) => {
+  private setRef = (node: HTMLDivElement) => {
     this.arrMatchResult.push(node);
   };
 
   render() {
-    const engmatches: any = [];
-    let matchdates: any = [];
-    /* главный массив для рендера */
-    const matchday: any = [];
+
+    /* только матчи англии */
+    const engmatches: IData[] = [];
+    /*все дни матчей */
+    let matchdates: string[] = [];
+    /* все игры за конкретный день */
+    const matchday: MatchesByDate[] = [];
 
     /* присваиваем кадому матчу уникальный id, и в engmatche[] отбираем матчи по англии */
-    this.props.allfootball?.map((league, i) => {
+    this.props.allfootball?.map((league:IData, i:number) => {
       league.competition.id = i;
-      if (league.competition.name.search(/FRANCE/) === 0) {
+      if (league.competition.name.search(/ENGLAND/) === 0) {
         engmatches.push(league);
       }
     });
 
     /* в массив  matchdates[] сохраняем дни в которые игрались матчи*/
-    engmatches.map((match: { date: any }, i: any) => {
-      matchdates.push(match.date.match(/\d+\-\d+\-\d+/)[0]);
+    engmatches.map((game: IData, i: number) => {
+      const day:string = game.date.match(/\d+\-\d+\-\d+/)![0]
+      matchdates.push(day);
+      console.log(matchdates)
     });
 
     /* выбираем уникальные даты из matchdates[] */
-    const unique = (arr: any) => {
-      const result: any[] = [];
+    const unique = (arr: string[]) => {
+      const result: string[] = [];
 
       for (const str of arr) {
         if (!result.includes(str)) {
@@ -75,18 +82,18 @@ class France extends React.Component<FranceProps, State> {
     matchdates = [...unique(matchdates)];
 
     /* соединяем массивы matchdates и  engmatches для удобства отображения*/
-    matchdates.map((dateday: any, i: any) => {
+    matchdates.map((dateday: string, i: number) => {
       matchday.push([dateday]);
-
+      
       engmatches.map(
-        (match: { date: { match: (arg0: any) => null } }, k: any) =>
+        (match: IData, k: number) =>
           match.date.match(dateday) !== null ? matchday[i].push(match) : null
       );
     });
 
     return (
       <div className="container-xl pt-5">
-        {matchday.map((elem: any[], k: number) => (
+        {matchday.map((elem: MatchesByDate, k: number) => (
           <div key={k} className="row mb-3">
             <div className="col-12 text-center">
               <div className="row league_info align-items-center mb-2">
@@ -96,7 +103,7 @@ class France extends React.Component<FranceProps, State> {
                 <div className="col-2">
                   <span
                     className="arrow"
-                    onClick={e =>
+                    onClick={(e) =>
                       this.props.toggleResultPanel(this.arrMatchResult[k], e)
                     }
                   >
@@ -107,16 +114,15 @@ class France extends React.Component<FranceProps, State> {
             </div>
             <div className="col-12">
               <div className="row panel-body" ref={this.setRef}>
-                {elem.map((match: any, i: number) =>
+                {elem.map((match:any, i: number) =>
                   match.competition !== undefined ? (
                     <div key={i} className="col-12">
                       <div
                         data-matchid={match.competition.id}
                         onClick={(e) => {
-                          this.props.viewMoreMatchInfo(e, this.props)
+                          this.props.viewMoreMatchInfo(e, this.props);
                           this.props.getMatchID(match.id);
-                        }
-                        }
+                        }}
                         className="row align-items-center match-score-show"
                       >
                         <div className="col-3 match-competition-name">
@@ -147,7 +153,7 @@ class France extends React.Component<FranceProps, State> {
 const mapStateToProps = (state: IApplicationState) => {
   return {
     allfootball: state.allResults.data,
-    similar_years: state.allResults.similar_years
+    similar_years: state.allResults.similar_years,
   };
 };
 
@@ -157,8 +163,9 @@ const mapDispatchToProps = (dispatch: any) => {
     getMatchID: (id: number) => dispatch(getMatchID(id)),
     toggleResultPanel: (value: any, e: any) =>
       dispatch(toggleResultPanel(value, e)),
-    viewMoreMatchInfo: (e: any, url: any) => dispatch(viewMoreMatchInfo(e, url))
+    viewMoreMatchInfo: (e: React.MouseEvent, url: any) =>
+      dispatch(viewMoreMatchInfo(e, url)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(France);
+export default connect(mapStateToProps, mapDispatchToProps)(England);

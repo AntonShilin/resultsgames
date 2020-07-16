@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export const withConvertDate = (Component:any) => {
+const ConvertDate = (Component: typeof React.Component) => {
     interface Props {
         
     }
@@ -9,13 +9,9 @@ export const withConvertDate = (Component:any) => {
         
     }
      
-    class ConvertDate extends React.Component<Props, State> {
-        constructor(props:Props) {
-            super(props);
-            this.matchData = this.matchData.bind(this);
-        }
+    class Convert extends React.Component<Props, State> {
 
-        public matchData = (time: string) => {
+      convertDateOfMatch = (time: string) => {
             const d = new Date(time);
             const months = [
               "January",
@@ -35,11 +31,14 @@ export const withConvertDate = (Component:any) => {
             const month = months[d.getMonth()];
             const year = d.getFullYear();
             return `${dayOfMonth} ${month} ${year}`;
-          };
-        render() { 
-            return (<Component {...this.props}/> );
+      };
+      
+      render() {
+        return (<Component convertDateOfMatch={this.convertDateOfMatch} {...this.props}/> );
         }
     }
      
-    return ConvertDate;
+    return Convert;
 }
+
+export default ConvertDate;
