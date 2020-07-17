@@ -11,6 +11,7 @@ import {
 } from "../../../Actions/Actions";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { IApplicationState } from "../../../Store/Store";
+import ConvertDate from "../../../HOC/ConvertDate/ConvertDate";
 
 export interface IItalyProps {
   allfootball: IData[] | null;
@@ -19,6 +20,7 @@ export interface IItalyProps {
   toggleResultPanel: typeof toggleResultPanel;
   viewMoreMatchInfo: typeof viewMoreMatchInfo;
   getMatchID: typeof getMatchID;
+  convertDateOfMatch: (time: string) => string;
 }
 
 export interface State {}
@@ -91,7 +93,7 @@ class Italy extends React.Component<IItalyProps, State> {
             <div className="col-12 text-center">
               <div className="row league_info align-items-center mb-2">
                 <div className="col-10 day">
-                  <span className="">{elem[0]}</span>
+                  <span>{this.props.convertDateOfMatch(elem[0]!)}</span>
                 </div>
                 <div className="col-2">
                   <span
@@ -116,7 +118,7 @@ class Italy extends React.Component<IItalyProps, State> {
                           this.props.viewMoreMatchInfo(e, this.props);
                           this.props.getMatchID(match.id);
                         }}
-                        className="row align-items-center match-score-show"
+                        className="match-score-show row align-items-center"
                       >
                         <div className="col-3 match-competition-name">
                           <p className="mb-0">{match.competition.name}</p>
@@ -154,11 +156,15 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     getData: () => dispatch(getData()),
     getMatchID: (id: number) => dispatch(getMatchID(id)),
-    toggleResultPanel: (value: any, e: any) =>
-      dispatch(toggleResultPanel(value, e)),
+    toggleResultPanel: (
+      elem: HTMLDivElement,
+      e: React.MouseEvent<HTMLSpanElement, MouseEvent>
+    ) => dispatch(toggleResultPanel(elem, e)),
     viewMoreMatchInfo: (e: any, url: any) =>
       dispatch(viewMoreMatchInfo(e, url)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Italy);
+const withConvertDateMethod = ConvertDate(Italy);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withConvertDateMethod);

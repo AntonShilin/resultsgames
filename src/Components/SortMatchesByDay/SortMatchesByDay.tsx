@@ -13,6 +13,8 @@ import { IApplicationState } from "../../Store/Store";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import ReturnPrevPage from "../ReturnPrevPage/ReturnPrevPage";
 import { MatchesByDate } from "../../Reducer/calendarReducer";
+import ResultDatePanel from "../ResultFilterPanel/ResultFilterPanel";
+import ConvertDate from "../../HOC/ConvertDate/ConvertDate";
 
 export interface ISortMatchesByDayProps {
   allfootball: IData[] | null;
@@ -24,6 +26,7 @@ export interface ISortMatchesByDayProps {
   viewMoreMatchInfo: typeof viewMoreMatchInfo;
   sortingMatchesByDate: MatchesByDate[] | null;
   selectDay: number | null;
+  convertDateOfMatch: (time: string) => string;
 }
 
 export interface State {}
@@ -62,24 +65,7 @@ class SortMatchesByDay extends React.Component<ISortMatchesByDayProps, State> {
         <ReturnPrevPage />
         {this.props.sortingMatchesByDate !== null && (
           <React.Fragment>
-            {this.props.sortingMatchesByDate.map(
-              (elem: MatchesByDate, k: number) =>
-                elem[0] === fullDate && (
-                  <div className="row align-items-center" key={k}>
-                    <div className="col-4">
-                      <p className="footbal_result">
-                        Football <span>Results</span>
-                      </p>
-                    </div>
-                    <div className="col-4" />
-                    <div className="col-4 h-25">
-                      <p className="local_time">
-                        All times are shown in your local time
-                      </p>
-                    </div>
-                  </div>
-                )
-            )}
+            <ResultDatePanel />
             {this.props.sortingMatchesByDate.map(
               (elem: MatchesByDate, x: number) =>
                 elem[0] === fullDate && (
@@ -87,7 +73,7 @@ class SortMatchesByDay extends React.Component<ISortMatchesByDayProps, State> {
                     <div className="col-12 text-center">
                       <div className="row league_info align-items-center mb-2">
                         <div className="col-10 day">
-                          <span className="">{elem[0]}</span>
+                          <span>{this.props.convertDateOfMatch(elem[0]!)}</span>
                         </div>
                         <div className="col-2">
                           <span
@@ -117,7 +103,7 @@ class SortMatchesByDay extends React.Component<ISortMatchesByDayProps, State> {
                                     this.props.viewMoreMatchInfo(e, this.props);
                                     this.props.getMatchID(match.id!);
                                   }}
-                                  className="row align-items-center match-score-show"
+                                  className="match-score-show row align-items-center"
                                 >
                                   <div className="col-3 match-competition-name">
                                     <p className="mb-0">
@@ -174,4 +160,9 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SortMatchesByDay);
+const withConvertDateMethod = ConvertDate(SortMatchesByDay);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withConvertDateMethod);

@@ -8,15 +8,15 @@ import {
   viewMoreMatchInfo,
   getMatchID,
   sortingByDate,
-  returnPrevPage,
 } from "../../Actions/Actions";
 // import "./SortMatchesByDate.scss";
-import Preloader from "../Preloader/Preloader";
 import { IApplicationState } from "../../Store/Store";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import ReturnPrevPage from "../ReturnPrevPage/ReturnPrevPage";
 import { MatchesByDate } from "../../Reducer/calendarReducer";
+import ResultFilterPanel from "../ResultFilterPanel/ResultFilterPanel";
+import ConvertDate from "../../HOC/ConvertDate/ConvertDate";
 
 export interface ISortMatchesByDateProps extends RouteComponentProps {
   allfootball: IData[] | null;
@@ -28,7 +28,7 @@ export interface ISortMatchesByDateProps extends RouteComponentProps {
   viewMoreMatchInfo: typeof viewMoreMatchInfo;
   sortingByDate: typeof sortingByDate;
   sortingMatchesByDate: MatchesByDate[] | null;
-  selectDay: number | null;
+  convertDateOfMatch: (time: string) => string;
 }
 
 export interface State {}
@@ -47,10 +47,6 @@ class SortMatchesByDate extends React.Component<
     if (this.props.allfootball === null) {
       this.props.getData();
     }
-
-    if (this.props.sortingMatchesByDate === null) {
-      this.props.history.goBack();
-    }
   }
 
   public setRef = (node: HTMLDivElement) => {
@@ -63,26 +59,16 @@ class SortMatchesByDate extends React.Component<
         <ReturnPrevPage />
         {this.props.sortingMatchesByDate !== null && (
           <React.Fragment>
-            <div className="row align-items-center">
-              <div className="col-4">
-                <p className="footbal_result">
-                  Football <span>Results</span>
-                </p>
-              </div>
-              <div className="col-4" />
-              <div className="col-4 h-25">
-                <p className="local_time">
-                  All times are shown in your local time
-                </p>
-              </div>
-            </div>
+            <ResultFilterPanel />
             {this.props.sortingMatchesByDate.map(
               (elem: MatchesByDate, k: number) => (
                 <div key={k} className="row mb-3">
                   <div className="col-12 text-center">
                     <div className="row league_info align-items-center mb-2">
                       <div className="col-10 day">
-                        <span className="">{elem[0]}</span>
+                        <span>
+                          {this.props.convertDateOfMatch(elem[0]!)}
+                        </span>
                       </div>
                       <div className="col-2">
                         <span
@@ -112,7 +98,7 @@ class SortMatchesByDate extends React.Component<
                                   this.props.viewMoreMatchInfo(e, this.props);
                                   this.props.getMatchID(match.id!);
                                 }}
-                                className="row align-items-center match-score-show"
+                                className="match-score-show row align-items-center"
                               >
                                 <div className="col-3 match-competition-name">
                                   <p className="mb-0">
@@ -149,10 +135,7 @@ class SortMatchesByDate extends React.Component<
 const mapStateToProps = (state: IApplicationState) => {
   return {
     allfootball: state.allResults.data,
-    isLoading: state.allResults.isLoading,
-    similar_years: state.allResults.similar_years,
     sortingMatchesByDate: state.filter.sortingMatchesByDate,
-    selectDay: state.filter.selectDay,
   };
 };
 
@@ -161,19 +144,19 @@ const mapDispatchToProps = (dispatch: any) => {
     getData: () => dispatch(getData()),
     getMatchID: (id: number) => dispatch(getMatchID(id)),
     toggleResultPanel: (
-      value: HTMLDivElement,
+      elem: HTMLDivElement,
       e: React.MouseEvent<HTMLSpanElement, MouseEvent>
-    ) => dispatch(toggleResultPanel(value, e)),
+    ) => dispatch(toggleResultPanel(elem, e)),
     viewMoreMatchInfo: (e: React.MouseEvent, url: any) =>
       dispatch(viewMoreMatchInfo(e, url)),
-    sortingByDate: (similarYears: any, allfootball: any) =>
-      dispatch(sortingByDate(similarYears, allfootball)),
   };
 };
 
 const withURLSortMatchesByDate = withRouter(SortMatchesByDate);
 
+const withConvertDateMethod = ConvertDate(withURLSortMatchesByDate);
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withURLSortMatchesByDate);
+)(withConvertDateMethod);

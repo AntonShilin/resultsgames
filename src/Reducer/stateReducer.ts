@@ -3,13 +3,11 @@ import {
     MainActions,
     GetDataResultsTypes,
     ToggleFooterTypes,
-    toggleRezultPanelTypes,
     viewMoreMatchInfoTypes,
     sliderArrowsTypes,
     returnPrevPageTypes,
     isLoadingTypes,
     GetMatchIdTypes,
-    SortingAllMatchesByDateTypes,
   } from "../Types/Types";
   
   const initialState: IMainState = {
@@ -18,7 +16,6 @@ import {
     isLoading: false,
     matchID: null,
     number_of_video: 0,
-    sortingMatchesByDate: null
   };
   
   export const stateReducer = (
@@ -36,11 +33,6 @@ import {
         };
       }
         
-      case toggleRezultPanelTypes.RESULTPANEL: {
-        return {
-          ...state,
-        };
-      }
         
       case ToggleFooterTypes.TOGGLEFOOTER: {
         return {
@@ -89,12 +81,6 @@ import {
         };
       }
         
-      case SortingAllMatchesByDateTypes.SORTINGALLMATCHESBYDATE: {
-        return {
-          ...state,
-          sortingMatchesByDate: action.sortingByDate
-        };
-      }
         
         
       default:

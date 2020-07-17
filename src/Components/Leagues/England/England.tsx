@@ -12,7 +12,7 @@ import {
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { IApplicationState } from "../../../Store/Store";
 import { MatchesByDate } from "../../../Reducer/calendarReducer";
-
+import ConvertDate from "../../../HOC/ConvertDate/ConvertDate";
 
 export interface IEnglandProps {
   allfootball: IData[] | null;
@@ -21,6 +21,7 @@ export interface IEnglandProps {
   toggleResultPanel: typeof toggleResultPanel;
   viewMoreMatchInfo: typeof viewMoreMatchInfo;
   getMatchID: typeof getMatchID;
+  convertDateOfMatch: (time: string) => string;
 }
 
 export interface State {}
@@ -53,7 +54,7 @@ class England extends React.Component<IEnglandProps, State> {
     const matchday: MatchesByDate[] = [];
 
     /* присваиваем кадому матчу уникальный id, и в engmatche[] отбираем матчи по англии */
-    this.props.allfootball?.map((league:IData, i:number) => {
+    this.props.allfootball?.map((league: IData, i: number) => {
       league.competition.id = i;
       if (league.competition.name.search(/ENGLAND/) === 0) {
         engmatches.push(league);
@@ -62,9 +63,8 @@ class England extends React.Component<IEnglandProps, State> {
 
     /* в массив  matchdates[] сохраняем дни в которые игрались матчи*/
     engmatches.map((game: IData, i: number) => {
-      const day:string = game.date.match(/\d+\-\d+\-\d+/)![0]
+      const day: string = game.date.match(/\d+\-\d+\-\d+/)![0];
       matchdates.push(day);
-      console.log(matchdates)
     });
 
     /* выбираем уникальные даты из matchdates[] */
@@ -84,10 +84,9 @@ class England extends React.Component<IEnglandProps, State> {
     /* соединяем массивы matchdates и  engmatches для удобства отображения*/
     matchdates.map((dateday: string, i: number) => {
       matchday.push([dateday]);
-      
-      engmatches.map(
-        (match: IData, k: number) =>
-          match.date.match(dateday) !== null ? matchday[i].push(match) : null
+
+      engmatches.map((match: IData, k: number) =>
+        match.date.match(dateday) !== null ? matchday[i].push(match) : null
       );
     });
 
@@ -98,7 +97,7 @@ class England extends React.Component<IEnglandProps, State> {
             <div className="col-12 text-center">
               <div className="row league_info align-items-center mb-2">
                 <div className="col-10 day">
-                  <span className="">{elem[0]}</span>
+                  <span>{this.props.convertDateOfMatch(elem[0]!)}</span>
                 </div>
                 <div className="col-2">
                   <span
@@ -114,7 +113,7 @@ class England extends React.Component<IEnglandProps, State> {
             </div>
             <div className="col-12">
               <div className="row panel-body" ref={this.setRef}>
-                {elem.map((match:any, i: number) =>
+                {elem.map((match: any, i: number) =>
                   match.competition !== undefined ? (
                     <div key={i} className="col-12">
                       <div
@@ -123,7 +122,7 @@ class England extends React.Component<IEnglandProps, State> {
                           this.props.viewMoreMatchInfo(e, this.props);
                           this.props.getMatchID(match.id);
                         }}
-                        className="row align-items-center match-score-show"
+                        className="match-score-show row align-items-center"
                       >
                         <div className="col-3 match-competition-name">
                           <p className="mb-0">{match.competition.name}</p>
@@ -161,11 +160,14 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     getData: () => dispatch(getData()),
     getMatchID: (id: number) => dispatch(getMatchID(id)),
-    toggleResultPanel: (value: any, e: any) =>
-      dispatch(toggleResultPanel(value, e)),
+    toggleResultPanel: (
+      elem: HTMLDivElement,
+      e: React.MouseEvent<HTMLSpanElement, MouseEvent>
+    ) => dispatch(toggleResultPanel(elem, e)),
     viewMoreMatchInfo: (e: React.MouseEvent, url: any) =>
       dispatch(viewMoreMatchInfo(e, url)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(England);
+const withConvertDateMethod = ConvertDate(England);
+export default connect(mapStateToProps, mapDispatchToProps)(withConvertDateMethod);

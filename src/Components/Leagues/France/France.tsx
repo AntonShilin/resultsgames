@@ -7,10 +7,11 @@ import {
   analysisTotal,
   toggleResultPanel,
   viewMoreMatchInfo,
-  getMatchID
+  getMatchID,
 } from "../../../Actions/Actions";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { IApplicationState } from "../../../Store/Store";
+import ConvertDate from "../../../HOC/ConvertDate/ConvertDate";
 
 export interface FranceProps {
   allfootball: IData[] | null;
@@ -19,12 +20,13 @@ export interface FranceProps {
   toggleResultPanel: typeof toggleResultPanel;
   viewMoreMatchInfo: typeof viewMoreMatchInfo;
   getMatchID: typeof getMatchID;
+  convertDateOfMatch: (time: string) => string;
 }
 
 export interface State {}
 
 class France extends React.Component<FranceProps, State> {
-  arrMatchResult: any;
+  arrMatchResult: HTMLDivElement[];
   constructor(props: FranceProps) {
     super(props);
     this.arrMatchResult = [];
@@ -37,7 +39,7 @@ class France extends React.Component<FranceProps, State> {
   }
 
   /* собираем в массив все даты матчей чтобы по клику на стрелку возможно было скрыть/открыть */
-  private setRef = (node: any) => {
+  private setRef = (node: HTMLDivElement) => {
     this.arrMatchResult.push(node);
   };
 
@@ -91,12 +93,12 @@ class France extends React.Component<FranceProps, State> {
             <div className="col-12 text-center">
               <div className="row league_info align-items-center mb-2">
                 <div className="col-10 day">
-                  <span className="">{elem[0]}</span>
+                  <span>{this.props.convertDateOfMatch(elem[0]!)}</span>
                 </div>
                 <div className="col-2">
                   <span
                     className="arrow"
-                    onClick={e =>
+                    onClick={(e) =>
                       this.props.toggleResultPanel(this.arrMatchResult[k], e)
                     }
                   >
@@ -113,11 +115,10 @@ class France extends React.Component<FranceProps, State> {
                       <div
                         data-matchid={match.competition.id}
                         onClick={(e) => {
-                          this.props.viewMoreMatchInfo(e, this.props)
+                          this.props.viewMoreMatchInfo(e, this.props);
                           this.props.getMatchID(match.id);
-                        }
-                        }
-                        className="row align-items-center match-score-show"
+                        }}
+                        className="match-score-show row align-items-center"
                       >
                         <div className="col-3 match-competition-name">
                           <p className="mb-0">{match.competition.name}</p>
@@ -147,7 +148,7 @@ class France extends React.Component<FranceProps, State> {
 const mapStateToProps = (state: IApplicationState) => {
   return {
     allfootball: state.allResults.data,
-    similar_years: state.allResults.similar_years
+    similar_years: state.allResults.similar_years,
   };
 };
 
@@ -155,10 +156,15 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     getData: () => dispatch(getData()),
     getMatchID: (id: number) => dispatch(getMatchID(id)),
-    toggleResultPanel: (value: any, e: any) =>
-      dispatch(toggleResultPanel(value, e)),
-    viewMoreMatchInfo: (e: any, url: any) => dispatch(viewMoreMatchInfo(e, url))
+    toggleResultPanel: (
+      elem: HTMLDivElement,
+      e: React.MouseEvent<HTMLSpanElement, MouseEvent>
+    ) => dispatch(toggleResultPanel(elem, e)),
+    viewMoreMatchInfo: (e: any, url: any) =>
+      dispatch(viewMoreMatchInfo(e, url)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(France);
+const withConvertDateMethod = ConvertDate(France);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withConvertDateMethod);

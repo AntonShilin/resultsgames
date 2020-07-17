@@ -83,9 +83,9 @@ export const toggleResultPanel = (
   elem: HTMLDivElement,
   e: React.MouseEvent<HTMLSpanElement, MouseEvent>
 ): IResultPanelAction => {
+  
   e.currentTarget.classList.toggle("arrow-reverse");
-
-  console.log(elem);
+  
   // tslint:disable-next-line: prefer-for-of
   for (let i = 0; i < elem.children.length; i++) {
     elem.children[i].children[0].classList.toggle("match-score-hide");

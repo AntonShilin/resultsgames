@@ -7,26 +7,21 @@ import {
   toggleResultPanel,
   viewMoreMatchInfo,
   getMatchID,
-  toggleCalendar,
 } from "../../../Actions/Actions";
 import "./AllFootball.scss";
-import { GoCalendar } from "react-icons/go";
 import Preloader from "../../Preloader/Preloader";
 import { IApplicationState } from "../../../Store/Store";
 import { MdKeyboardArrowUp } from "react-icons/md";
-import Calendar from "../../Calendar/Calendar";
 import ConvertDate from "../../../HOC/ConvertDate/ConvertDate";
-import PreviousDays from "../../PreviousDays/PreviousDays";
+import ResultDatePanel from "../../ResultFilterPanel/ResultFilterPanel";
 
 export interface IAllFootballProps {
   allfootball: IData[] | null;
   isLoading: boolean;
-  isCalendarShow: boolean;
   getData: typeof getData;
   toggleResultPanel: typeof toggleResultPanel;
   getMatchID: typeof getMatchID;
   viewMoreMatchInfo: typeof viewMoreMatchInfo;
-  toggleCalendar: typeof toggleCalendar;
   convertDateOfMatch: (time: string) => string;
 }
 
@@ -50,43 +45,13 @@ class AllFootball extends React.Component<IAllFootballProps, State> {
   };
 
   public render() {
-    const { isCalendarShow } = this.props;
-
     return (
       <React.Fragment>
-        {this.props.allfootball ===null ? (
+        {this.props.allfootball === null ? (
           <Preloader />
         ) : (
           <div className="container-xl pt-5">
-            <div className="row align-items-center">
-              <div className="col-4">
-                <p className="footbal_result">
-                  Football <span>Results</span>
-                </p>
-              </div>
-              <div className="col-4" />
-              <div className="col-4 h-25">
-                <div className="row">
-                  <div className="col-6">
-                    <span className="calendar_icon">
-                      <GoCalendar
-                        onClick={() => {
-                          this.props.toggleCalendar(this.props.isCalendarShow);
-                        }}
-                      />
-                      {isCalendarShow && <Calendar />}
-                    </span>
-                  </div>
-                  <div className="col-6">
-                    <PreviousDays />
-                  </div>
-                </div>
-
-                <p className="local_time">
-                  All times are shown in your local time
-                </p>
-              </div>
-            </div>
+            <ResultDatePanel />
             {this.props.allfootball!.map((elem: IData, k: number) => (
               <div key={k} className="row mb-3">
                 <div className="col-12 text-center">
@@ -120,7 +85,7 @@ class AllFootball extends React.Component<IAllFootballProps, State> {
                           this.props.viewMoreMatchInfo(e, this.props);
                           this.props.getMatchID(elem.id!);
                         }}
-                        className="row align-items-center match-score-show"
+                        className="match-score-show row align-items-center"
                       >
                         <div className="col-3 match-competition-name">
                           <p className="mb-0">{elem.competition.name}</p>
@@ -151,24 +116,22 @@ const mapStateToProps = (state: IApplicationState) => {
   return {
     allfootball: state.allResults.data,
     isLoading: state.allResults.isLoading,
-    isCalendarShow: state.filter.isCalendarShow,
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
     getData: () => dispatch(getData()),
-    toggleCalendar: (value: boolean) => dispatch(toggleCalendar(value)),
     getMatchID: (id: number) => dispatch(getMatchID(id)),
     toggleResultPanel: (
-      value: any,
+      elem: HTMLDivElement,
       e: React.MouseEvent<HTMLSpanElement, MouseEvent>
-    ) => dispatch(toggleResultPanel(value, e)),
+    ) => dispatch(toggleResultPanel(elem, e)),
     viewMoreMatchInfo: (e: React.MouseEvent, url: any) =>
       dispatch(viewMoreMatchInfo(e, url)),
   };
 };
 
-const withConvertMethod = ConvertDate(AllFootball);
+const withConvertDateMethod = ConvertDate(AllFootball);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withConvertMethod);
+export default connect(mapStateToProps, mapDispatchToProps)(withConvertDateMethod);

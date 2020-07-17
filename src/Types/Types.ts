@@ -150,5 +150,4 @@ export interface IMainState {
   isLoading: boolean;
   matchID: number | null;
   number_of_video: number | 0;
-  sortingMatchesByDate: any | null;
 }
