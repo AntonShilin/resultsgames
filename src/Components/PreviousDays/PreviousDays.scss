@@ -1,10 +1,13 @@
-a {
+a.previous_days {
   text-decoration: none;
   position: relative;
   cursor: pointer;
   svg {
     font-size: 1.8rem;
     color: darkblue;
+    &:hover{
+      color: rgb(212, 14, 90) !important;
+    }
   }
   span {
     position: absolute;

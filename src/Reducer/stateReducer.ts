@@ -5,7 +5,6 @@ import {
     ToggleFooterTypes,
     viewMoreMatchInfoTypes,
     sliderArrowsTypes,
-    returnPrevPageTypes,
     isLoadingTypes,
     GetMatchIdTypes,
   } from "../Types/Types";
@@ -61,11 +60,7 @@ import {
         };
       }
   
-      case returnPrevPageTypes.PREVPAGE: {
-        return {
-          ...state,
-        };
-      }
+
   
       case isLoadingTypes.LOADING: {
         return {

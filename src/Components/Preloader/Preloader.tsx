@@ -13,7 +13,7 @@ class Preloader extends React.Component<Props, State> {
         <div className="row  preloader_area align-items-center">
           <div className="col-12 preloader_lawn">
             <div className="preloader_ball">
-              <IoMdFootball style={{ fontSize: "4rem" }} />
+              <IoMdFootball/>
             </div>
           </div>
         </div>

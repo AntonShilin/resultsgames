@@ -32,10 +32,10 @@ export interface ISortMatchesByDayProps {
 export interface State {}
 
 class SortMatchesByDay extends React.Component<ISortMatchesByDayProps, State> {
-  private arrMatchResult: HTMLDivElement[];
+  MatchResult: React.RefObject<HTMLDivElement>;
   constructor(props: ISortMatchesByDayProps) {
     super(props);
-    this.arrMatchResult = [];
+    this.MatchResult = React.createRef();
   }
 
   public componentDidMount() {
@@ -44,9 +44,6 @@ class SortMatchesByDay extends React.Component<ISortMatchesByDayProps, State> {
     }
   }
 
-  public setRef = (node: HTMLDivElement) => {
-    this.arrMatchResult.push(node);
-  };
 
   public render() {
     const day =
@@ -79,10 +76,7 @@ class SortMatchesByDay extends React.Component<ISortMatchesByDayProps, State> {
                           <span
                             className="arrow"
                             onClick={(e) =>
-                              this.props.toggleResultPanel(
-                                this.arrMatchResult[x],
-                                e
-                              )
+                              this.props.toggleResultPanel(this.MatchResult.current!, e)
                             }
                           >
                             <MdKeyboardArrowUp style={{ fontSize: "1.5rem" }} />
@@ -91,8 +85,8 @@ class SortMatchesByDay extends React.Component<ISortMatchesByDayProps, State> {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="row panel-body" ref={this.setRef}>
-                        {elem.map(
+                      <div className="row panel-body" ref={this.MatchResult}>
+                        {elem!.map(
                           (match: string | IData | undefined, i: number) =>
                             typeof match !== "string" &&
                             typeof match !== "undefined" && (

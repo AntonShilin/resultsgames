@@ -1,66 +1,65 @@
 .preloader {
-    .preloader_area {
-      height: 100vh;
-    }
-    .preloader_lawn {
-      position: relative;
-      height: 0rem;
-    }
-  
-    .preloader_ball {
-      height: 0.3rem;
-      width: 4rem;
-      left: 40%;
-      position: absolute;
-      margin: 0 auto;
-       animation: 1s ease infinite jump_up;
-      background-color: rgb(158, 158, 158);
-      border-radius: 50%;
-      transform: rotate(180deg);
-      svg {
-        animation: ball_spinner 4s ease infinite;
-      }
+  .preloader_area {
+    height: 100vh;
+  }
+  .preloader_lawn {
+    position: relative;
+    height: 0rem;
+  }
+
+  .preloader_ball {
+    height: 0.3rem;
+    width: 4rem;
+    left: 40%;
+    position: absolute;
+    margin: 0 auto;
+    animation: 1s ease infinite jump_up;
+    background-color: rgb(158, 158, 158);
+    border-radius: 50%;
+    transform: rotate(180deg);
+    svg {
+      animation: ball_spinner 4s ease infinite;
+      color: darkblue;
+      font-size: 4rem;
     }
   }
-  
-  @keyframes jump_up {
-    0% {
-      bottom: 0rem;
-      background-color: rgb(158, 158, 158);
-    }
-    1% {
-      background-color: transparent;
-    }
-    25% {
-  
-    }
-    50% {
-      bottom: 5rem;
-    }
-    75% {
-  
-    }
-    95% {
-      background-color: transparent;
+}
+
+@keyframes jump_up {
+  0% {
+    bottom: 0rem;
+    background-color: rgb(158, 158, 158);
+  }
+  1% {
+    background-color: transparent;
+  }
+  25% {
+  }
+  50% {
+    bottom: 5rem;
+  }
+  75% {
+  }
+  95% {
+    background-color: transparent;
   }
   100% {
-      bottom: 0rem;
-      background-color: rgb(158, 158, 158);
+    bottom: 0rem;
+    background-color: rgb(158, 158, 158);
   }
+}
+
+@keyframes ball_spinner {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  @keyframes ball_spinner {
-      0% {
-          transform: rotate(0deg);
-      }
-      25% {
-          transform: rotate(80deg);
-      }
-      50% {
-          transform: rotate(-80deg);
-      }
-      100% {
-      transform: rotate(0deg);
-    }
+  25% {
+    transform: rotate(80deg);
   }
-  
+  50% {
+    transform: rotate(-80deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}

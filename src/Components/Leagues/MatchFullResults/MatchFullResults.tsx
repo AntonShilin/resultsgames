@@ -7,7 +7,6 @@ import {
   getData,
   clickLeftArrowSlider,
   clickRightArrowSlider,
-  returnPrevPage,
 } from "../../../Actions/Actions";
 import "./MatchFullResults.scss";
 import { FaChartLine } from "react-icons/fa";
@@ -27,7 +26,6 @@ export interface IMatchFullResultProps extends RouteComponentProps {
   number_of_video: number | 0;
   clickLeftArrowSlider: typeof clickLeftArrowSlider;
   clickRightArrowSlider: typeof clickRightArrowSlider;
-  returnPrevPage: typeof returnPrevPage;
 }
 
 export interface State {}
@@ -213,7 +211,6 @@ const mapDispatchToProps = (dispatch: any) => {
       dispatch(clickLeftArrowSlider(num, moments)),
     clickRightArrowSlider: (num: number, moments: number) =>
       dispatch(clickRightArrowSlider(num, moments)),
-    returnPrevPage: (url: any) => dispatch(returnPrevPage(url)),
   };
 };
 

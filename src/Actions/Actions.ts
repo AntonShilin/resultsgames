@@ -4,12 +4,10 @@ import {
   toggleRezultPanelTypes,
   viewMoreMatchInfoTypes,
   sliderArrowsTypes,
-  returnPrevPageTypes,
   isLoadingTypes,
   GetMatchIdTypes,
   IGetMatchIdAction,
   ILoadingAction,
-  IReturnPrevPageAction,
   IClickSliderRightAction,
   IClickSliderLeftAction,
   IViewMoreMatchInfoAction,
@@ -153,13 +151,6 @@ export const clickRightArrowSlider = (
   };
 };
 
-/* go back prev page */
-export const returnPrevPage = (url: any): IReturnPrevPageAction => {
-  url.goBack();
-  return {
-    type: returnPrevPageTypes.PREVPAGE,
-  };
-};
 
 /* preload page */
 const loading = (): ILoadingAction => {

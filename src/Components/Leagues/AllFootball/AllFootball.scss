@@ -22,7 +22,7 @@ div {
       cursor: pointer;
       color: darkblue;
       &:hover{
-        color: rgb(216, 30, 92);
+        color: rgb(216, 30, 92) !important;
       }
     }
   }

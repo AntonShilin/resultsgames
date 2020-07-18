@@ -19,9 +19,6 @@ export enum sliderArrowsTypes {
   CLICKARROWRIGHT = "CLICKARROWRIGHT",
 }
 
-export enum returnPrevPageTypes {
-  PREVPAGE = "PREVPAGE",
-}
 
 export enum isLoadingTypes {
   LOADING = "LOADING",
@@ -70,9 +67,6 @@ export interface ILoadingAction {
   type: isLoadingTypes.LOADING;
 }
 
-export interface IReturnPrevPageAction {
-  type: returnPrevPageTypes.PREVPAGE;
-}
 
 export interface IClickSliderLeftAction {
   type: sliderArrowsTypes.CLICKARROWLEFT;
@@ -112,7 +106,6 @@ export type MainActions =
   | IViewMoreMatchInfoAction
   | IClickSliderLeftAction
   | IClickSliderRightAction
-  | IReturnPrevPageAction
   | IGetMatchIdAction
   | ILoadingAction;
 

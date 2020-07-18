@@ -1,14 +1,12 @@
 div {
   div {
-    a.prev_page {
-      cursor: pointer;
       svg {
+        cursor: pointer;
         font-size: 1.5rem;
         color: #788089;
         &:hover {
             color: #103464 !important;
           }
       }
-    }
   }
 }

@@ -2,7 +2,7 @@ import * as React from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { IApplicationState } from "../../Store/Store";
 import "./ReturnPrevPage.scss";
-import { withRouter, RouteComponentProps, NavLink } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import { connect } from "react-redux";
 
 export interface IReturnPrevPageProps extends RouteComponentProps {}
@@ -10,13 +10,15 @@ export interface IReturnPrevPageProps extends RouteComponentProps {}
 export interface State {}
 
 class ReturnPrevPage extends React.Component<IReturnPrevPageProps, State> {
+  returnPrev = () => {
+    this.props.history.goBack();
+  }
+
   render() {
     return (
       <div className="row mb-5 mt-3">
         <div className="col-12">
-          <NavLink className="prev_page" to="/allfootball">
-            <IoIosArrowBack />
-          </NavLink>
+          <IoIosArrowBack onClick={this.returnPrev}/>
         </div>
       </div>
     );
