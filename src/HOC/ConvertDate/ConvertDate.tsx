@@ -30,7 +30,7 @@ const ConvertDate = (Component: typeof React.Component) => {
             const dayOfMonth = d.getDate();
             const month = months[d.getMonth()];
             const year = d.getFullYear();
-            return `${dayOfMonth} ${month} ${year}`;
+        return `${dayOfMonth } ${month} ${year}`
       };
       
       render() {

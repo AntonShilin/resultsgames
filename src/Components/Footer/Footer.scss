@@ -1,59 +1,43 @@
-div.footer_bg{
-    background-color: rgb(16, 52, 100);
-  
-    footer:nth-of-type(1) {
-      color: #ffffff;
+footer.footer_bg {
+  background-color: rgb(16, 52, 100);
+  height: 75vh;
+  position: relative;
+  div {
+    .footer_pages {
+      svg {
+        color: #ffffff !important;
+        font-size: 1.5rem;
+      }
+      h6 {
+        color: white;
+      }
+      p {
+        color: white;
+      }
     }
-    footer:nth-of-type(2) {
-      color: #ffffff;
-      div.row{
-        height: 70vh;
-        div{
-          div{
-            height: 100%;
-            img{
-            margin: 0 auto;
-            display: block;
-            bottom: 25vh;
-            left: 35vw;
-          }
+    .copyright {
+      position: absolute;
+      bottom: 0;
+      left: 0rem;
+      width: 100%;
+      div {
+        background-color: rgb(16, 52, 100);
+        img {
+          display: block;
+          margin: 0 auto;
+        }
+        p {
+          color: white;
         }
       }
     }
   }
+}
+
+.show {
+  transition: height 1s linear;
+  height: 2rem;
+  p {
+    display: none;
   }
-  
-  
-  @media screen and (max-width: 767px) {
-    footer:nth-of-type(1) {
-      height: 3rem;
-      transition: height .3s;
-      overflow: hidden;
-      .footer_pages>div>div>div>p{
-        margin-left: 5rem;
-      }
-      .footer_pages>div>div>div>button.move_off{
-        display: block;
-      }
-    }
-  }
-  
-  div.row>div>button.move_off{
-    transition: transform .3s;
-    transform: rotate(0deg);
-   color: #ffffff;
-   background-color: transparent;
-   border: 0;
-   outline: transparent;
-   display: none;
-  }
-  
-  .move_on{
-    transition: transform .3s;
-    transform: rotate(180deg) !important;
-  }
-  
-  .show{
-    transition: height .3s;
-    height: 16rem !important;
-  }
+}

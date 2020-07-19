@@ -2,7 +2,6 @@ import {
     IMainState,
     MainActions,
     GetDataResultsTypes,
-    ToggleFooterTypes,
     viewMoreMatchInfoTypes,
     sliderArrowsTypes,
     isLoadingTypes,
@@ -24,20 +23,25 @@ import {
     switch (action.type) {
       case GetDataResultsTypes.GETDATARESULTS: {
   
+        const withIDandDate = (data: any[]) => {
+          data.map((elem, i) => {
+            elem.id = i;
+            const newDate = elem.date.match(/\d+\-\d+\-\d+/g)
+            elem.date = newDate[0]
+          });
+          
+          return data;
+        };
+
+
         return {
           ...state,
-          data: action.results,
+          data: withIDandDate(action.results!),
           similar_years: action.years,
           isLoading: false,
         };
       }
         
-        
-      case ToggleFooterTypes.TOGGLEFOOTER: {
-        return {
-          ...state,
-        };
-      }
         
   
       case viewMoreMatchInfoTypes.VIEWMOREMATCHINFO: {

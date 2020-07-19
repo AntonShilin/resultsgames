@@ -1,63 +1,70 @@
 import * as React from "react";
 import "../Footer/Footer.scss";
-import { connect } from "react-redux";
-import { toggleFooter } from "../../Actions/Actions";
-import { MdKeyboardArrowUp } from "react-icons/md";
+import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 
-export interface Props {
-  toggleFooter: typeof toggleFooter;
+export interface IFooterProps {}
+
+export interface IFooterState {
+  isOpenFooter: boolean;
 }
 
-export interface State {}
-
-class Footer extends React.Component<Props, State> {
-  footer: React.RefObject<HTMLDivElement>;
-  constructor(props: Props) {
+class Footer extends React.Component<IFooterProps, IFooterState> {
+  constructor(props: IFooterProps) {
     super(props);
-    this.footer = React.createRef();
+    this.state = { isOpenFooter: true };
   }
+
+  toggleFooter = () => {
+    this.setState({
+      isOpenFooter: !this.state.isOpenFooter,
+    });
+  };
+
   render() {
     return (
-      <div className="container-fluid footer_bg">
-        <footer className="container-xl pt-3 pb-2 mt-5" ref={this.footer}>
-          <div className="row footer_pages">
-            <div className="col-lg col-md-4 col-sm-12">
+      <footer className="container-fluid footer_bg  mt-5">
+        <div className="container-xl pt-3 pb-2">
+          <div
+            className={
+              this.state.isOpenFooter
+                ? "row footer_pages show"
+                : "row footer_pages"
+            }
+          >
+            <div className="col-12">
               <div className="row align-self-center">
                 <div className="col-10">
-                  <p className="text-center ml-sm-5 ml-md-0 ml-lg-0 pl-sm-5 pl-md-0 pl-lg-0">
+                  <h6 className="text-center">
                     MultiChoice Website
-                  </p>
+                  </h6>
                 </div>
                 <div className="col-2">
-                  <button
-                    className="move_off"
-                    onClick={e => this.props.toggleFooter(this.footer, e)}
-                  >
-                    <MdKeyboardArrowUp style={{ fontSize: "1.5rem" }} />
-                  </button>
+                  {this.state.isOpenFooter ? (
+                    <MdKeyboardArrowUp onClick={this.toggleFooter} />
+                  ) : (
+                    <MdKeyboardArrowDown onClick={this.toggleFooter} />
+                  )}
                 </div>
               </div>
             </div>
-            <div className="col-lg col-md-4 col-sm-12">
+            <div className="col-12">
               <p className="text-center">Terms & Conditions</p>
             </div>
-            <div className="col-lg col-md-4 col-sm-12">
+            <div className="col-12">
               <p className="text-center">Privacy & Cookie Notice</p>
             </div>
-            <div className="col-lg col-md-4 col-sm-12">
+            <div className="col-12">
               <p className="text-center">Responsible Disclosure Policy</p>
             </div>
-            <div className="col-lg col-md-4 col-sm-12">
+            <div className="col-12">
               <p className="text-center">Copyright</p>
             </div>
-            <div className="col-lg col-md-4 col-sm-12">
+            <div className="col-12">
               <p className="text-center">Careers</p>
             </div>
           </div>
-        </footer>
-        <footer className="container-xl">
           <div className="row copyright">
-            <div className="col-12  align-self-end">
+            <div className="col-12">
               <div>
                 <img
                   src="https://supersport.azureedge.net/web-assets/brand2/multichoice-africa-logo@3x.png"
@@ -70,19 +77,10 @@ class Footer extends React.Component<Props, State> {
               </p>
             </div>
           </div>
-        </footer>
-      </div>
+        </div>
+      </footer>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    toggleFooter: (
-      elem: React.RefObject<HTMLDivElement>,
-      e: React.MouseEvent
-    ) => dispatch(toggleFooter(elem, e))
-  };
-};
-
-export default connect(null, mapDispatchToProps)(Footer);
+export default Footer;

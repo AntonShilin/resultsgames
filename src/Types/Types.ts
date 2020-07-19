@@ -6,9 +6,6 @@ export enum toggleRezultPanelTypes {
   RESULTPANEL = "RESULTPANEL",
 }
 
-export enum ToggleFooterTypes {
-  TOGGLEFOOTER = "TOGGLEFOOTER",
-}
 
 export enum viewMoreMatchInfoTypes {
   VIEWMOREMATCHINFO = "VIEWMOREMATCHINFO",
@@ -82,9 +79,6 @@ export interface IViewMoreMatchInfoAction {
   type: viewMoreMatchInfoTypes.VIEWMOREMATCHINFO;
 }
 
-export interface IToggleFooterAction {
-  type: ToggleFooterTypes.TOGGLEFOOTER;
-}
 
 export interface IGetDataResultsAction {
   type: GetDataResultsTypes.GETDATARESULTS;
@@ -102,7 +96,6 @@ export type MainActions =
   | ISortingAllMatchesByDateAction
   | IGetDataResultsAction
   | IResultPanelAction
-  | IToggleFooterAction
   | IViewMoreMatchInfoAction
   | IClickSliderLeftAction
   | IClickSliderRightAction

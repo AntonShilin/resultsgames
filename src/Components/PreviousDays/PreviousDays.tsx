@@ -20,7 +20,7 @@ export interface State {}
 class PreviousDays extends React.Component<IPreviousDaysProps, State> {
 
   componentDidMount() {
-    this.props.sortingByDate(this.props.similar_years, this.props.allfootball)
+    this.props.sortingByDate(this.props.similar_years, this.props.allfootball!)
   }
 
   render() {
@@ -51,7 +51,7 @@ const mapStateToProps = (state: IApplicationState) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    sortingByDate: (similarYears: any, allfootball: any) =>
+    sortingByDate: (similarYears: string[], allfootball: IData[]|null) =>
       dispatch(sortingByDate(similarYears, allfootball)),
   };
 };

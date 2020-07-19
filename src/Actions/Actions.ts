@@ -1,6 +1,5 @@
 import {
   GetDataResultsTypes,
-  ToggleFooterTypes,
   toggleRezultPanelTypes,
   viewMoreMatchInfoTypes,
   sliderArrowsTypes,
@@ -11,7 +10,6 @@ import {
   IClickSliderRightAction,
   IClickSliderLeftAction,
   IViewMoreMatchInfoAction,
-  IToggleFooterAction,
   IResultPanelAction,
   SortingAllMatchesByDateTypes,
   ISortingAllMatchesByDateAction,
@@ -37,12 +35,6 @@ const getSimilarYears = (arr: any) => {
   return similarYears;
 };
 
-const addID = (data: any[]) => {
-  data.map((elem, i) => {
-    elem.id = i;
-  });
-  return data;
-};
 
 /* get all matches data */
 export const getData = () => {
@@ -59,7 +51,7 @@ export const getData = () => {
       .then((data) =>
         dispatch({
           type: GetDataResultsTypes.GETDATARESULTS,
-          results: addID(data),
+          results: data,
           years: getSimilarYears(data),
         })
       );
@@ -94,16 +86,7 @@ export const toggleResultPanel = (
   };
 };
 
-export const toggleFooter = (
-  elem: any,
-  e: React.MouseEvent
-): IToggleFooterAction => {
-  elem.current.classList.toggle("show");
-  e.currentTarget.classList.toggle("move_on");
-  return {
-    type: ToggleFooterTypes.TOGGLEFOOTER,
-  };
-};
+
 
 export const viewMoreMatchInfo = (
   e: any,
@@ -167,10 +150,11 @@ export const getMatchID = (id: number): IGetMatchIdAction => {
   };
 };
 
+
 /* sorting all matches by date */
 export const sortingByDate = (
-  similarYears: any,
-  allfootball: any
+  similarYears: string[],
+  allfootball: IData[]|null
 ): ISortingAllMatchesByDateAction => {
   const sortingMatchesByDate: MatchesByDate[] = [];
 
