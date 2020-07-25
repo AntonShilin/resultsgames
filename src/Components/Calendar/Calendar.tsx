@@ -3,8 +3,12 @@ import "./Calendar.scss";
 import { IApplicationState } from "../../Store/Store";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { selectMatchDayInCalendar, toggleCalendar } from "../../Actions/Actions";
+import {
+  selectMatchDayInCalendar,
+  toggleCalendar,
+} from "../../Actions/Actions";
 import { MatchesByDate } from "../../Reducer/calendarReducer";
+import { table } from "console";
 
 export interface ICalendarProps {
   selectMatchDayInCalendar: typeof selectMatchDayInCalendar;
@@ -13,89 +17,100 @@ export interface ICalendarProps {
   isCalendarShow: boolean;
 }
 
-export interface State {}
+export interface IState {
+}
 
-class Calendar extends React.Component<ICalendarProps, State> {
-  drawingDays = () => {
-    const divs = [];
-    let i = 0;
-    const len = 31;
-    while (++i <= len) divs.push(i);
-    const day = new Date().getDate();
+class Calendar extends React.Component<ICalendarProps, IState> {
+  tabBody: React.RefObject<any>;
+  counterID: () => number;
+  counterDay: () => number;
 
-    return (
-      <>
-        {divs.map((k) => (
-          <div key={k}>
-            {k === day ? (
-              <NavLink
-                to="/allfootball/sortbyday"
-                className="current_day"
-                onClick={() => {
-                  this.props.toggleCalendar(this.props.isCalendarShow);
-                  this.props.selectMatchDayInCalendar(k)
-                }
-                }
-              >
-                {k}
-              </NavLink>
-            ) : (
-              <NavLink
-                to="/allfootball/sortbyday"
-                  onClick={() => {
-                    this.props.toggleCalendar(this.props.isCalendarShow);
-                    this.props.selectMatchDayInCalendar(k)
-                  }}
-              >
-                {k}
-              </NavLink>
-            )}
-          </div>
-        ))}
-      </>
-    );
+  constructor(props: ICalendarProps) {
+    super(props);
+    this.tabBody = React.createRef();
+    this.counterID = this.startCounter();
+    this.counterDay = this.startCounter();
+  }
+
+  startCounter = () => {
+    let num = 0;
+    return () => {
+      return num++;
+    };
   };
 
-  render() {
+
+  getTime = () => {
     const d = new Date();
+    const month = d.getMonth();
     const year = d.getFullYear();
-    const months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
+    const fullData = new Date(year, month, 1);
+    const allMonths = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    return {
+      firstWeekDayOfMonth: fullData.getDay(), /* day of week */
+      lastDateOfMonth: new Date(year, month + 1, 0).getDate(), /* last day of month */
+      currentMonth: allMonths[month],
+      currentYear: year,
+      todayDate: d.getDate() /* today date */
+    };
+  };
+
+  createCalendar = () => {
+    const tablebody = this.tabBody.current;
+
+    for (let z = 0; z <= 5; z++) {
+      const row = document.createElement("tr");
+      tablebody.appendChild(row);
+
+      for (let s = 0; s <= 6; s++) {
+        const col = document.createElement("td");
+        tablebody.children[z].appendChild(col);
+        col.id = this.counterID().toString();
+      }
+    }
+
+
+    Array.from(tablebody.children).map((week: any, s) =>
+      Array.from(week.children).map((day: any, i) => {
+        
+        if (+day.id >= this.getTime().firstWeekDayOfMonth) {
+          const currentDay = this.counterDay()+1;
+          const lastDateOfMonth = this.getTime().lastDateOfMonth;
+          day.innerText = currentDay<=lastDateOfMonth ? currentDay.toString() : '';
+        } 
+      
+      })
+    );  
+  };
+
+  componentDidMount() {
+    this.createCalendar();
+  }
+
+  render() {
+    const {currentMonth, currentYear} = this.getTime();
 
     return (
-        <div className="calendar_item">
-          <div className="month">
-            <div>
-              {months[d.getMonth()]}
-              <span> {year}</span>
-            </div>
-          </div>
-
-          <div className="weekdays">
-            <div>Mo</div>
-            <div>Tu</div>
-            <div>We</div>
-            <div>Th</div>
-            <div>Fr</div>
-            <div>Sa</div>
-            <div>Su</div>
-          </div>
-
-          <div className="days">{this.drawingDays()}</div>
-
-        </div>
+      <div className="calendar_item">
+        <table>
+          <caption>{currentMonth}{` `}{currentYear}</caption>
+          <thead className="weekdays">
+            <tr>
+              <th>Su</th>
+              <th>Mo</th>
+              <th>Tu</th>
+              <th>We</th>
+              <th>Th</th>
+              <th>Fr</th>
+              <th>Sa</th>
+            </tr>
+          </thead>
+          <tbody className="days" ref={this.tabBody}>
+            {}
+          </tbody>
+        </table>
+      </div>
     );
   }
 }
@@ -112,7 +127,7 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     selectMatchDayInCalendar: (day: number) =>
       dispatch(selectMatchDayInCalendar(day)),
-      toggleCalendar: (value:boolean) => dispatch(toggleCalendar(value)),
+    toggleCalendar: (value: boolean) => dispatch(toggleCalendar(value)),
   };
 };
 

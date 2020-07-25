@@ -1,64 +1,59 @@
 .calendar_item {
   position: absolute;
   top: 3rem;
-  right: -1rem;
+  right: -2.5rem;
   z-index: 5;
-  max-width: 15rem;
   border: 1px solid rgb(194, 192, 192);
+  background: #fbfcfe;
+  padding: 0.3rem;
+  width: 18.5rem;
 
-  .month {
-    padding: 0.3rem;
-    background: #103464;
-    text-align: center;
-    div {
-      color: white;
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-    }
-  }
-
-  .weekdays {
-    margin: 0;
-    padding: 10px 0;
-    background-color: #ddd;
-    display: flex;
-    flex-direction: row;
-    div {
-      width: 4rem;
-      color: #3f51b5;
+  table {
+    width: 100%;
+    letter-spacing: 0.012em;
+    font-size: 14px;
+    color: #636b6f;
+    caption {
       text-align: center;
+      caption-side: top;
     }
-  }
-
-  .days {
-    padding: 10px 0;
-    background: #eee;
-    margin: 0;
-    div {
-      display: inline-block;
-      width: 2.1rem;
+    thead {
       text-align: center;
-      margin-bottom: 0.5rem;
-      font-size: 1rem;
-      a {
-        color: #3b3d41;
-        text-decoration: none;
-        padding: 5px;
-        cursor: pointer;
-        &:hover{
-          background-color: lightgrey;
+      tr {
+        th {
+          font-size: 75%;
+          padding: 0 5px;
+          width: 40px;
+          height: 40px;
+          line-height: 40px;
+          text-align: center;
+          vertical-align: middle;
         }
       }
-      a.current_day {
-        text-decoration: none;
-        padding: 5px;
-        cursor: pointer;
-        color: white !important;
-        background: #1895ce;
-        &:hover{
-          background-color: lightgrey;
-          color: #3b3d41 !important;
+    }
+    tbody {
+      tr {
+        td {
+          padding: 0 5px;
+          width: 40px;
+          height: 40px;
+          line-height: 40px;
+          text-align: center;
+          vertical-align: middle;
+          border: 1px solid transparent;
+          border: 1px solid lightgray;
+          cursor: pointer;
+          &:hover{
+            background: #033660 ;
+            color: #fff;
+          }
+          a {
+            text-decoration: none;
+          }
+        }
+        .today {
+          color: #fff;
+          background: #033660;
         }
       }
     }
