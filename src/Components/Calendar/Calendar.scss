@@ -1,19 +1,21 @@
 .calendar_item {
   position: absolute;
   top: 3rem;
-  right: -2.7rem;
+  right: -3.2rem;
   z-index: 5;
   border: 1px solid rgb(194, 192, 192);
   background: #fbfcfe;
-  max-width: 19.5rem;
+  width: 20rem;
+  box-shadow: 6px 6px 13px 0px #888888;
 
   table {
     width: 100%;
     letter-spacing: 0.012em;
-    font-size: 1rem;
     color: #636b6f;
     caption {
-      padding: 0.5rem 0.5rem 0rem 0.5rem;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 0.5rem;
       text-align: center;
       caption-side: top;
     }
@@ -21,10 +23,10 @@
       text-align: center;
       tr {
         th {
-          font-size: 75%;
+          font-weight: 600;
           padding: 0 5px;
-          width: 40px;
-          height: 40px;
+          width: 2rem;
+          height: 2rem;
           line-height: 40px;
           text-align: center;
           vertical-align: middle;
@@ -34,9 +36,7 @@
     tbody {
       tr {
         td {
-          width: 40px;
-          height: 40px;
-          line-height: 40px;
+          line-height: 2rem;
           text-align: center;
           vertical-align: middle;
           border: 1px solid transparent;
@@ -49,8 +49,7 @@
           }
           a {
             display: inline-block;
-            width: 40px;
-            padding: 0 5px;
+            width: 2.3rem;
             text-decoration: none;
             color: #636b6f;
           }

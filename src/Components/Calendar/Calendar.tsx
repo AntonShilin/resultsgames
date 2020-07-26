@@ -105,11 +105,17 @@ class Calendar extends React.Component<ICalendarProps, IState> {
     Array.from(this.tabBody.current!.children).map((week: any, s) =>
       Array.from(week.children).map((day: any, i) => {
         day.id = this.counterID().toString();
+        
         if (+day.id >= this.getTime().firstWeekDayOfMonth) {
           const currentDay = this.counterDay() + 1;
           const lastDateOfMonth = this.getTime().lastDateOfMonth;
           day.children[0].innerText =
             currentDay <= lastDateOfMonth ? currentDay.toString() : "";
+        }
+
+        if (+day.children[0].innerText === this.getTime().todayDate) {
+          day.style.backgroundColor = '#033660';
+          day.children[0].style.color = 'white';
         }
 
       })
