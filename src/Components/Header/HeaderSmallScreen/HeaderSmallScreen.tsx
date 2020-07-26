@@ -103,7 +103,7 @@ class HeaderSmallScreen extends React.Component<
                 this.toggleSmallScreenMenu();
               }}
             >
-              <NavLink to={value.leagueShortName}>
+              <NavLink to={`/${value.leagueShortName}`}>
                 <p className="text-center mb-0 small">{value.officialName}</p>
               </NavLink>
             </div>

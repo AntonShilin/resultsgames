@@ -1,19 +1,19 @@
 .calendar_item {
   position: absolute;
   top: 3rem;
-  right: -2.5rem;
+  right: -2.7rem;
   z-index: 5;
   border: 1px solid rgb(194, 192, 192);
   background: #fbfcfe;
-  padding: 0.3rem;
-  width: 18.5rem;
+  max-width: 19.5rem;
 
   table {
     width: 100%;
     letter-spacing: 0.012em;
-    font-size: 14px;
+    font-size: 1rem;
     color: #636b6f;
     caption {
+      padding: 0.5rem 0.5rem 0rem 0.5rem;
       text-align: center;
       caption-side: top;
     }
@@ -34,21 +34,25 @@
     tbody {
       tr {
         td {
-          padding: 0 5px;
           width: 40px;
           height: 40px;
           line-height: 40px;
           text-align: center;
           vertical-align: middle;
           border: 1px solid transparent;
-          border: 1px solid lightgray;
           cursor: pointer;
-          &:hover{
-            background: #033660 ;
-            color: #fff;
+          &:hover {
+            background: #033660;
+            a {
+              color: white;
+            }
           }
           a {
+            display: inline-block;
+            width: 40px;
+            padding: 0 5px;
             text-decoration: none;
+            color: #636b6f;
           }
         }
         .today {

@@ -2,26 +2,22 @@ import * as React from "react";
 import "./Calendar.scss";
 import { IApplicationState } from "../../Store/Store";
 import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, RouteComponentProps, withRouter } from "react-router-dom";
 import {
   selectMatchDayInCalendar,
   toggleCalendar,
 } from "../../Actions/Actions";
-import { MatchesByDate } from "../../Reducer/calendarReducer";
-import { table } from "console";
 
-export interface ICalendarProps {
+export interface ICalendarProps extends RouteComponentProps {
   selectMatchDayInCalendar: typeof selectMatchDayInCalendar;
-  sortingMatchesByDate: MatchesByDate[] | null;
   toggleCalendar: typeof toggleCalendar;
   isCalendarShow: boolean;
 }
 
-export interface IState {
-}
+export interface IState {}
 
 class Calendar extends React.Component<ICalendarProps, IState> {
-  tabBody: React.RefObject<any>;
+  tabBody: React.RefObject<HTMLTableSectionElement>;
   counterID: () => number;
   counterDay: () => number;
 
@@ -39,62 +35,102 @@ class Calendar extends React.Component<ICalendarProps, IState> {
     };
   };
 
-
   getTime = () => {
     const d = new Date();
     const month = d.getMonth();
     const year = d.getFullYear();
     const fullData = new Date(year, month, 1);
-    const allMonths = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const allMonths = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "June",
+      "July",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
 
     return {
-      firstWeekDayOfMonth: fullData.getDay(), /* day of week */
-      lastDateOfMonth: new Date(year, month + 1, 0).getDate(), /* last day of month */
+      firstWeekDayOfMonth: fullData.getDay() /* day of week */,
+      lastDateOfMonth: new Date(
+        year,
+        month + 1,
+        0
+      ).getDate() /* last day of month */,
       currentMonth: allMonths[month],
       currentYear: year,
-      todayDate: d.getDate() /* today date */
+      todayDate: d.getDate() /* today date */,
     };
   };
 
   createCalendar = () => {
-    const tablebody = this.tabBody.current;
+    const kalendar: any[][] = [];
 
-    for (let z = 0; z <= 5; z++) {
-      const row = document.createElement("tr");
-      tablebody.appendChild(row);
-
-      for (let s = 0; s <= 6; s++) {
-        const col = document.createElement("td");
-        tablebody.children[z].appendChild(col);
-        col.id = this.counterID().toString();
+    for (let row = 0; row <= 5; row++) {
+      kalendar.push([]);
+      for (let col = 0; col <= 6; col++) {
+        kalendar[row][col] = "";
       }
     }
 
+    return (
+      <>
+        {kalendar.map((week, w) => (
+          <tr key={w}>
+            {week.map((day, d) => (
+              <td
+                key={d}
+                onClick={(e) => {
+                  this.props.selectMatchDayInCalendar(
+                    +e.currentTarget.children[0].innerHTML
+                  );
+                  this.props.toggleCalendar(this.props.isCalendarShow);
+                }}
+              >
+                <NavLink to="/allfootball/sortbyday">{}</NavLink>
+              </td>
+            ))}
+          </tr>
+        ))}
+      </>
+    );
+  };
 
-    Array.from(tablebody.children).map((week: any, s) =>
+  drawingDataInTable = () => {
+    Array.from(this.tabBody.current!.children).map((week: any, s) =>
       Array.from(week.children).map((day: any, i) => {
-        
+        day.id = this.counterID().toString();
         if (+day.id >= this.getTime().firstWeekDayOfMonth) {
-          const currentDay = this.counterDay()+1;
+          const currentDay = this.counterDay() + 1;
           const lastDateOfMonth = this.getTime().lastDateOfMonth;
-          day.innerText = currentDay<=lastDateOfMonth ? currentDay.toString() : '';
-        } 
-      
+          day.children[0].innerText =
+            currentDay <= lastDateOfMonth ? currentDay.toString() : "";
+        }
+
       })
-    );  
+    );
   };
 
   componentDidMount() {
-    this.createCalendar();
+    this.drawingDataInTable();
   }
 
   render() {
-    const {currentMonth, currentYear} = this.getTime();
+    const { currentMonth, currentYear } = this.getTime();
 
     return (
       <div className="calendar_item">
         <table>
-          <caption>{currentMonth}{` `}{currentYear}</caption>
+          <caption>
+            {currentMonth}
+            {` `}
+            {currentYear}
+          </caption>
           <thead className="weekdays">
             <tr>
               <th>Su</th>
@@ -107,7 +143,7 @@ class Calendar extends React.Component<ICalendarProps, IState> {
             </tr>
           </thead>
           <tbody className="days" ref={this.tabBody}>
-            {}
+            {this.createCalendar()}
           </tbody>
         </table>
       </div>
@@ -117,8 +153,6 @@ class Calendar extends React.Component<ICalendarProps, IState> {
 
 const mapStateToProps = (state: IApplicationState) => {
   return {
-    sortingByDate: state.filter.sortingMatchesByDate,
-    sortingMatchesByDate: state.filter.sortingMatchesByDate,
     isCalendarShow: state.filter.isCalendarShow,
   };
 };
@@ -131,4 +165,9 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Calendar);
+const withURLPropsCalendar = withRouter(Calendar);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withURLPropsCalendar);
