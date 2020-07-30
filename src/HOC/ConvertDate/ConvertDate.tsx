@@ -1,15 +1,8 @@
 import * as React from 'react';
 
 const ConvertDate = (Component: typeof React.Component) => {
-    interface Props {
-        
-    }
      
-  interface State {
-        
-    }
-     
-    class Convert extends React.Component<Props, State> {
+  class Convert extends React.Component<{}, {}> {
 
       convertDateOfMatch = (time: string) => {
             const d = new Date(time);
