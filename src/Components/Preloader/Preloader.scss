@@ -19,7 +19,7 @@
     transform: rotate(180deg);
     svg {
       animation: ball_spinner 4s ease infinite;
-      color: darkblue;
+      color: rgb(19, 19, 20);
       font-size: 4rem;
     }
   }
@@ -36,11 +36,11 @@
   25% {
   }
   50% {
-    bottom: 5rem;
+    bottom: 7rem;
   }
   75% {
   }
-  95% {
+  85% {
     background-color: transparent;
   }
   100% {
@@ -54,10 +54,10 @@
     transform: rotate(0deg);
   }
   25% {
-    transform: rotate(80deg);
+    transform: rotate(90deg);
   }
   50% {
-    transform: rotate(-80deg);
+    transform: rotate(90deg);
   }
   100% {
     transform: rotate(0deg);

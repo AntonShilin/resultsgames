@@ -1,11 +1,17 @@
 import * as React from "react";
+import { IApplicationState } from "../../Store/Store";
+import { connect } from "react-redux";
 
 const DrawingCalendar = (Component: typeof React.Component) => {
-  class Calendar extends React.Component<{}, {}> {
+  interface ICalendarProps {
+    similar_years: string[];
+  }
+
+  class Calendar extends React.Component<ICalendarProps, {}> {
     counterID: () => number;
     counterDay: () => number;
 
-    constructor(props: {}) {
+    constructor(props: ICalendarProps) {
       super(props);
       this.counterID = this.startCounter();
       this.counterDay = this.startCounter();
@@ -46,13 +52,14 @@ const DrawingCalendar = (Component: typeof React.Component) => {
         ).getDate() /* last day of month */,
         currentMonth: allMonths[month],
         currentYear: year,
+        currentMonthAsNumber: month + 1 < 10 ? "0" + (month + 1) : month + 1,
         todayDate: d.getDate() /* today date */,
       };
     };
 
-    drawingDataInTable = (tabBody: { current: any }) => {
-      Array.from(tabBody.current!.children).map((week: any, s) =>
-        Array.from(week.children).map((day: any, i) => {
+    drawingDataInTable = (tabBody: { current: HTMLTableRowElement }) => {
+      Array.from(tabBody.current!.children).map((week, s:number) =>
+        Array.from(week.children).map((day:any, i:number) => {
           day.id = this.counterID().toString();
 
           if (+day.id >= this.getTime().firstWeekDayOfMonth) {
@@ -60,6 +67,8 @@ const DrawingCalendar = (Component: typeof React.Component) => {
             const lastDateOfMonth = this.getTime().lastDateOfMonth;
             day.children[0].innerText =
               currentDay <= lastDateOfMonth ? currentDay.toString() : "";
+
+            this.dateReconciliation(day);
           }
 
           if (+day.children[0].innerText === this.getTime().todayDate) {
@@ -69,6 +78,28 @@ const DrawingCalendar = (Component: typeof React.Component) => {
         })
       );
     };
+
+
+
+    dateReconciliation = (day: {
+      children: { innerText: string }[];
+      style: { backgroundColor: string };
+    }) => {
+      this.props.similar_years.map((value, i) => {
+        if (
+          this.getTime().currentYear.toString() +
+            "-" +
+            this.getTime().currentMonthAsNumber.toString() +
+            "-" +
+            day.children[0].innerText ===
+          value
+        ) {
+          day.style.backgroundColor = "#e7e8ea";
+        }
+      });
+    };
+
+
 
     render() {
       return (
@@ -82,7 +113,13 @@ const DrawingCalendar = (Component: typeof React.Component) => {
     }
   }
 
-  return Calendar;
+  const mapStateToProps = (state: IApplicationState) => {
+    return {
+      similar_years: state.allResults.similar_years,
+    };
+  };
+
+  return connect(mapStateToProps, null)(Calendar);
 };
 
 export default DrawingCalendar;

@@ -57,8 +57,6 @@ class SortMatchesByDay extends React.Component<ISortMatchesByDayProps, State> {
     const year = new Date().getFullYear();
     const fullDate = `${year}-${month}-${day}`;
 
-    console.log(this.props.selectDay)
-    console.log(fullDate)
 
     return (
       <div className="container-xl pt-2">

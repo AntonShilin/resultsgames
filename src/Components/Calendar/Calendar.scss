@@ -7,6 +7,7 @@
   background: #fbfcfe;
   width: 20rem;
   box-shadow: 6px 6px 13px 0px #888888;
+  padding: 0.1rem;
 
   table {
     width: 100%;
@@ -42,7 +43,7 @@
           border: 1px solid transparent;
           cursor: pointer;
           &:hover {
-            background: #033660;
+            background: #033660 !important;
             a {
               color: white;
             }
@@ -59,6 +60,21 @@
           background: #033660;
         }
       }
+    }
+  }
+
+  div {
+    font-size: 0.8rem;
+    color: #616568;
+    text-align: right;
+    padding-right: 1rem;
+    span {
+      vertical-align: -0.2rem;
+      margin-right: 0.5rem;
+      display: inline-block;
+      width: 2rem;
+      height: 1rem;
+      background-color: rgb(231, 232, 234);
     }
   }
 }

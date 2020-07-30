@@ -12,7 +12,13 @@ footer.footer_bg {
         color: white;
       }
       p {
+        padding: 1rem 0 1rem 0;
         color: white;
+        margin: 0;
+        &:hover{
+          cursor: pointer;
+          color: rgb(209, 79, 111);
+        }
       }
     }
     .copyright {

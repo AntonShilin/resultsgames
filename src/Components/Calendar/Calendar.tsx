@@ -28,7 +28,6 @@ class Calendar extends React.Component<ICalendarProps, IState> {
     this.tabBody = React.createRef();
   }
 
-
   createCalendar = () => {
     const kalendar: string[][] = [];
 
@@ -62,7 +61,6 @@ class Calendar extends React.Component<ICalendarProps, IState> {
     );
   };
 
-
   componentDidMount() {
     this.props.drawingDataInTable(this.tabBody);
   }
@@ -93,6 +91,9 @@ class Calendar extends React.Component<ICalendarProps, IState> {
             {this.createCalendar()}
           </tbody>
         </table>
+        <div>
+          <span>{}</span>Match days
+        </div>
       </div>
     );
   }

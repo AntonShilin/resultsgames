@@ -44,27 +44,6 @@ class AllFootball extends React.Component<IAllFootballProps, State> {
     this.arrMatchResult.push(node);
   };
 
-  convertDateOfMatch = (time: string) => {
-    const d = new Date(time);
-    const months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    const dayOfMonth = d.getDate();
-    const month = months[d.getMonth()];
-    const year = d.getFullYear();
-    return `${dayOfMonth} ${month} ${year}`;
-};
 
 
   public render() {
@@ -80,9 +59,7 @@ class AllFootball extends React.Component<IAllFootballProps, State> {
                 <div className="col-12 text-center">
                   <div className="row league_info align-items-center mb-2">
                     <div className="col-10 day">
-                      <span>
-                        {this.convertDateOfMatch(elem.date)}
-                      </span>
+                      <span>{this.props.convertDateOfMatch(elem.date)}</span>
                     </div>
                     <div className="col-2">
                       <span
@@ -94,7 +71,7 @@ class AllFootball extends React.Component<IAllFootballProps, State> {
                           )
                         }
                       >
-                        <MdKeyboardArrowUp style={{ fontSize: "1.5rem" }} />
+                        <MdKeyboardArrowUp />
                       </span>
                     </div>
                   </div>
@@ -155,5 +132,6 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
+const withConverTimeMethod = ConvertDate(AllFootball);
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllFootball);
+export default connect(mapStateToProps, mapDispatchToProps)(withConverTimeMethod);
