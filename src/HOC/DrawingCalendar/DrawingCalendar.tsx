@@ -7,7 +7,7 @@ const DrawingCalendar = (Component: typeof React.Component) => {
     similar_years: string[];
   }
 
-  class Calendar extends React.Component<ICalendarProps, {}> {
+  class Kalendar extends React.Component<ICalendarProps, {}> {
     counterID: () => number;
     counterDay: () => number;
 
@@ -119,7 +119,7 @@ const DrawingCalendar = (Component: typeof React.Component) => {
     };
   };
 
-  return connect(mapStateToProps, null)(Calendar);
+  return connect(mapStateToProps, null)(Kalendar);
 };
 
 export default DrawingCalendar;

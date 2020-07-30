@@ -9,6 +9,7 @@ import Calendar  from "../Calendar/Calendar";
 export interface IResultFilterPanelProps {
   toggleCalendar: typeof toggleCalendar;
   isCalendarShow: boolean;
+  similar_years: string[];
 }
 
 export interface State {}
@@ -51,6 +52,7 @@ class ResultFilterPanel extends React.Component<IResultFilterPanelProps, State> 
 const mapStateToProps = (state: IApplicationState) => {
   return {
     isCalendarShow: state.filter.isCalendarShow,
+    similar_years: state.allResults.similar_years
   };
 };
 

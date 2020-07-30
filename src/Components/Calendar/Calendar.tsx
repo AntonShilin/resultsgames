@@ -16,6 +16,7 @@ export interface ICalendarProps extends RouteComponentProps {
   drawingDataInTable: (elem: React.RefObject<HTMLTableSectionElement>) => void;
   currentYear: number;
   currentMonth: string;
+  similar_years: string[];
 }
 
 export interface IState {}
@@ -102,6 +103,7 @@ class Calendar extends React.Component<ICalendarProps, IState> {
 const mapStateToProps = (state: IApplicationState) => {
   return {
     isCalendarShow: state.filter.isCalendarShow,
+    similar_years: state.allResults.similar_years
   };
 };
 

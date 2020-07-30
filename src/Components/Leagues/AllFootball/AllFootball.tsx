@@ -23,6 +23,7 @@ export interface IAllFootballProps {
   getMatchID: typeof getMatchID;
   viewMoreMatchInfo: typeof viewMoreMatchInfo;
   convertDateOfMatch: (time: string) => string;
+  similar_years: string[];
 }
 
 export interface State {}
