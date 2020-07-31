@@ -33,12 +33,12 @@ class Footer extends React.Component<IFooterProps, IFooterState> {
           >
             <div className="col-12">
               <div className="row align-self-center">
-                <div className="col-11">
+                <div className="col-10">
                   <h6 className="text-center">
                     MultiChoice Website
                   </h6>
                 </div>
-                <div className="col-1">
+                <div className="col-2">
                   {this.state.isOpenFooter ? (
                     <MdKeyboardArrowUp onClick={this.toggleFooter} />
                   ) : (
