@@ -58,8 +58,8 @@ const DrawingCalendar = (Component: typeof React.Component) => {
     };
 
     drawingDataInTable = (tabBody: { current: HTMLTableRowElement }) => {
-      Array.from(tabBody.current!.children).map((week, s:number) =>
-        Array.from(week.children).map((day:any, i:number) => {
+      Array.from(tabBody.current!.children).map((week, s: number) =>
+        Array.from(week.children).map((day: any, i: number) => {
           day.id = this.counterID().toString();
 
           if (+day.id >= this.getTime().firstWeekDayOfMonth) {
@@ -67,7 +67,6 @@ const DrawingCalendar = (Component: typeof React.Component) => {
             const lastDateOfMonth = this.getTime().lastDateOfMonth;
             day.children[0].innerText =
               currentDay <= lastDateOfMonth ? currentDay.toString() : "";
-
             this.dateReconciliation(day);
           }
 
@@ -79,27 +78,26 @@ const DrawingCalendar = (Component: typeof React.Component) => {
       );
     };
 
-
-
     dateReconciliation = (day: {
       children: { innerText: string }[];
       style: { backgroundColor: string };
     }) => {
-      this.props.similar_years.map((value, i) => {
-        if (
+      this.props.similar_years.map((matchDay, i) => {
+        const d =
+          +day.children[0].innerText < 10
+            ? "0" + day.children[0].innerText
+            : day.children[0].innerText;
+        const currentDate =
           this.getTime().currentYear.toString() +
-            "-" +
-            this.getTime().currentMonthAsNumber.toString() +
-            "-" +
-            day.children[0].innerText ===
-          value
-        ) {
+          "-" +
+          this.getTime().currentMonthAsNumber.toString() +
+          "-" +
+          d;
+        if (currentDate === matchDay) {
           day.style.backgroundColor = "#e7e8ea";
         }
       });
     };
-
-
 
     render() {
       return (

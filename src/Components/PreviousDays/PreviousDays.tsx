@@ -30,10 +30,10 @@ class PreviousDays extends React.Component<IPreviousDaysProps, State> {
         className="previous_days"
       >
         <GoCalendar />
-        <span className="badge badge-info">
+        <span className="badge badge-pill badge-info">
           {this.props.sortingMatchesByDate !== null
             ? this.props.sortingMatchesByDate.length
-            : "0"}{" "}days
+            : "0"}
         </span>
       </NavLink>
     );
