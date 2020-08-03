@@ -21,7 +21,7 @@ div {
       text-align: center;
       cursor: pointer;
       color: darkblue;
-      &:hover{
+      &:hover {
         color: rgb(216, 30, 92) !important;
       }
     }
@@ -62,7 +62,7 @@ div.day {
   }
 }
 
-div.panel-body>div>div.match-score-show {
+div.panel-body > div > div.match-score-show {
   overflow: hidden;
   min-height: 4.5rem;
   background-color: rgb(255, 255, 255);
@@ -87,8 +87,14 @@ div.panel-body>div>div.match-score-show {
 }
 
 div.match-score-hide {
+  -webkit-transition: min-height 0.3s, font-size 0.3s;
   transition: min-height 0.3s, font-size 0.3s;
-  min-height: 0rem;
-  font-size: 0rem;
-  margin-bottom: 0rem;
+  min-height: 0rem !important;
+  margin-bottom: 0rem !important;
+  div {
+    p {
+      font-size: 0rem !important;
+      padding: 0rem !important;
+    }
+  }
 }

@@ -48,7 +48,6 @@ div {
   div.match-score-show {
     min-height: 4.5rem;
     background-color: rgb(255, 255, 255);
-    -webkit-transition: min-height 0.3s, font-size 0.3s;
     transition: min-height 0.3s, font-size 0.3s;
     font-size: 1rem;
     margin-bottom: 0.4rem;
@@ -67,8 +66,12 @@ div {
   div.match-score-hide {
     -webkit-transition: min-height 0.3s, font-size 0.3s;
     transition: min-height 0.3s, font-size 0.3s;
-    min-height: 0rem;
-    font-size: 0rem;
-    margin-bottom: 0rem;
+    min-height: 0rem !important;
+    margin-bottom: 0rem !important;
+    div {
+      p {
+        font-size: 0rem !important;
+        padding: 0rem !important;
+      }
+    }
   }
-  

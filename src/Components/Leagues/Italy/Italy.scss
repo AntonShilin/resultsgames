@@ -66,8 +66,13 @@ div {
   div.match-score-hide {
     -webkit-transition: min-height 0.3s, font-size 0.3s;
     transition: min-height 0.3s, font-size 0.3s;
-    min-height: 0rem;
-    font-size: 0rem;
-    margin-bottom: 0rem;
+    min-height: 0rem !important;
+    margin-bottom: 0rem !important;
+    div {
+      p {
+        font-size: 0rem !important;
+        padding: 0rem !important;
+      }
+    }
   }
   
