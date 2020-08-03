@@ -133,6 +133,6 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
-const withConverTimeMethod = ConvertDate(AllFootball);
+const withConvertTimeMethod = ConvertDate(AllFootball);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withConverTimeMethod);
+export default connect(mapStateToProps, mapDispatchToProps)(withConvertTimeMethod);

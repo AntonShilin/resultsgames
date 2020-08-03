@@ -28,6 +28,7 @@ div {
   }
   p.local_time {
     font-size: 0.8125rem;
+    font-weight: 400;
     color: #788089;
     overflow: hidden !important;
     text-overflow: ellipsis;
@@ -61,12 +62,11 @@ div.day {
   }
 }
 
-div.match-score-show {
+div.panel-body>div>div.match-score-show {
   overflow: hidden;
   min-height: 4.5rem;
   background-color: rgb(255, 255, 255);
   transition: min-height 0.3s, font-size 0.3s;
-  font-size: 1rem;
   margin-bottom: 0.4rem;
   &:hover {
     cursor: pointer;
@@ -75,6 +75,9 @@ div.match-score-show {
   }
   div > p {
     overflow: hidden;
+    color: #2c2d32 !important;
+    font-size: 1rem;
+    font-weight: 400;
   }
   .match-competition-name > p {
     overflow: hidden;

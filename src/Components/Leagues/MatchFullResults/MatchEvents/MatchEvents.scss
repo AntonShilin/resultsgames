@@ -1,0 +1,48 @@
+div.match-events {
+    background-color: #fff;
+    height: 100%;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    overflow: hidden;
+    p:nth-of-type(1) {
+      font-size: 1.125rem;
+      color: #272626;
+      font-weight: 700;
+      svg{
+        font-size: 1.7rem; 
+      }
+    }
+    p:not(:first-child) {
+      display: flex;
+      span.player-name {
+        background: #e7e8ea;
+        font-size: 0.875rem;
+        color: #636b6f;
+        align-self: center;
+        padding: 0.3rem 0.5rem 0.3rem 0.5rem;
+        min-width: 100%;
+        svg{
+          font-size: 1.3rem;
+          color: #070707;
+        }
+      }
+      span.minutes-events {
+        display: block;
+        font-size: 0.875rem;
+        padding: 7px 0;
+        text-align: center;
+        background: #4d4f55;
+        color: #fff;
+        border-radius: 50%;
+        min-width: 2.375rem;
+        min-height: 2.375rem;
+      }
+    }
+  }
+  
+  @media screen and (max-width: 767px) {
+    div.match-events {
+      p:not(:first-child) {
+        padding-left: 25%;
+      }
+    }
+  }
