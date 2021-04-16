@@ -1,78 +1,79 @@
 div {
-    p.footbal_result {
-      font-size: 1.625rem;
-      font-weight: 500;
-      color: #000;
-      span {
-        color: #788089;
-      }
-    }
-    p.match_data {
-      font-size: 1.125rem;
-      font-weight: 500;
-      color: #000;
-      letter-spacing: 0.06em;
-    }
-    p.local_time {
-      font-size: 0.8125rem;
+  p.footbal_result {
+    font-size: 1.625rem;
+    font-weight: 500;
+    color: #000;
+    span {
       color: #788089;
     }
   }
-  
-  div.row > div > .league_info {
-    min-height: 4rem;
-    background-color: rgb(243, 243, 246);
-    &:hover {
-      cursor: pointer;
-    }
-    .arrow {
-      transform: rotate(0deg);
-    }
-    .arrow-reverse {
-      display: inline-block;
-      transform: rotate(180deg);
-    }
+  p.match_data {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #000;
+    letter-spacing: 0.06em;
   }
-  
-  div.day {
-    padding-left: 8rem;
-    span {
-      font-weight: 500;
-      font-size: 1.125rem;
-      color: #000;
-      letter-spacing: 0.06em;
-    }
+  p.local_time {
+    font-size: 0.8125rem;
+    color: #788089;
   }
-  
-  div.match-score-show {
-    min-height: 4.5rem;
-    background-color: rgb(255, 255, 255);
-    -webkit-transition: min-height 0.3s, font-size 0.3s;
-    transition: min-height 0.3s, font-size 0.3s;
-    font-size: 1rem;
-    margin-bottom: 0.4rem;
-    &:hover {
-      cursor: pointer;
-      background-color: rgb(16, 52, 100);
+}
+
+div.row > div > .league_info {
+  min-height: 4rem;
+  background-color: rgb(243, 243, 246);
+  &:hover {
+    cursor: pointer;
+  }
+  .arrow {
+    transform: rotate(0deg);
+  }
+  .arrow-reverse {
+    display: inline-block;
+    transform: rotate(180deg);
+  }
+}
+
+div.day {
+  padding-left: 8rem;
+  span {
+    font-weight: 500;
+    font-size: 1.125rem;
+    color: #000;
+    letter-spacing: 0.06em;
+  }
+}
+
+div.match-score-show {
+  min-height: 4.5rem;
+  background-color: rgb(255, 255, 255);
+  -webkit-transition: min-height 0.3s, font-size 0.3s;
+  transition: min-height 0.3s, font-size 0.3s;
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+  &:hover {
+    cursor: pointer;
+    background-color: rgb(16, 52, 100);
+    p {
       color: #ffffff;
     }
-    .match-competition-name > p {
-      overflow: hidden;
-      text-overflow: ellipsis !important;
-      white-space: nowrap;
+  }
+  .match-competition-name > p {
+    overflow: hidden;
+    text-overflow: ellipsis !important;
+    white-space: nowrap;
+  }
+}
+
+div.match-score-hide {
+  -webkit-transition: min-height 0.3s, font-size 0.3s;
+  transition: min-height 0.3s, font-size 0.3s;
+  min-height: 0rem !important;
+  margin-bottom: 0rem !important;
+  div {
+    p {
+      font-size: 0rem !important;
+      padding: 0rem !important;
     }
   }
-  
-  div.match-score-hide {
-    -webkit-transition: min-height 0.3s, font-size 0.3s;
-    transition: min-height 0.3s, font-size 0.3s;
-    min-height: 0rem !important;
-    margin-bottom: 0rem !important;
-    div {
-      p {
-        font-size: 0rem !important;
-        padding: 0rem !important;
-      }
-    }
-  }
-  
+}

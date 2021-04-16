@@ -31,7 +31,6 @@ class Routes extends React.Component {
         <Route exact={true} path="/spain" component={Spain} />
         <Route exact={true} path="/italy" component={Italy} />
         <Route exact={true} path="/germany" component={Germany} />
-        <Route exact={true} path="/calendar" component={Calendar} />
         <Route exact={true} path="/france" component={France} />
         <Route path="/:name" component={MatchFullResults} />
         <Redirect exact={true} from="/" to="/allfootball" />

@@ -54,7 +54,9 @@ div {
     &:hover {
       cursor: pointer;
       background-color: rgb(16, 52, 100);
-      color: #ffffff;
+      p{
+        color: #ffffff !important;
+      }
     }
     .match-competition-name > p {
       overflow: hidden;

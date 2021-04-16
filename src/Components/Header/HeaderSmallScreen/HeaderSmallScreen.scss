@@ -48,7 +48,9 @@ div.row.list_small_screen_menu {
       cursor: pointer;
       background-color: rgb(16, 52, 100);
       a {
-        color: #ffffff !important;
+        p {
+          color: #ffffff !important;
+        }
       }
     }
     a {

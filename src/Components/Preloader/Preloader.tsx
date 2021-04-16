@@ -1,6 +1,5 @@
 import * as React from "react";
 import "./Preloader.scss";
-import { IoMdFootball } from "react-icons/io";
 
 export interface Props {}
 
@@ -10,10 +9,10 @@ class Preloader extends React.Component<Props, State> {
   render() {
     return (
       <div className="container-xl preloader">
-        <div className="row  preloader_area align-items-center">
+        <div className="row  preloader_area ">
           <div className="col-12 preloader_lawn">
             <div className="preloader_ball">
-              <IoMdFootball/>
+              <img src={require("../../media/img/ball.png")} />
             </div>
           </div>
         </div>

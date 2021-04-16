@@ -71,7 +71,9 @@ div.panel-body > div > div.match-score-show {
   &:hover {
     cursor: pointer;
     background-color: rgb(16, 52, 100);
-    color: #ffffff;
+    p{
+      color: #ffffff !important;
+    }
   }
   div > p {
     overflow: hidden;
